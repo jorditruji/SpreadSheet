@@ -1,0 +1,8 @@
+SpreadSheet Menu:
+
+1. New
+2. Save
+3. Load
+4. Set Value
+5. Get Value
+6. Quit
