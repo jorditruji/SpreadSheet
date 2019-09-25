@@ -9,7 +9,7 @@ class SpreadSheet:
 	This is the main class that will contain all the Cells and Expressions making a SpreadSheet.
 	All the functions contained in the menu, should be executed here.
 
-	Holds a maximum of 702 columns (from A to ZZ)
+	Holds a maximum of 702 columns (from A to ZZ) even though it can be easily expanded
 	"""
 
 	def __init__(self, size):
@@ -19,7 +19,7 @@ class SpreadSheet:
 		self.n_cols = size[1]
 
 		# Contains column alias to make it easier to evaluate expression
-		self.columns_alias = self.make_column_alias()
+		self.columns_alias = self.__make_column_alias()
 
 		self.expression_handler = Expression(self.columns_alias)
 
@@ -47,7 +47,7 @@ class SpreadSheet:
 			posy (int): Index position for row
 
 		Returns:
-			Cell: The Cell
+			Cell: The Cell value
 
 		"""
 		type_ = self.matrix[posx, posy].get_type()
@@ -84,7 +84,7 @@ class SpreadSheet:
 			#print(posx, posy)
 			return self.matrix[posx, posy].value
 
-	def make_column_alias(self):
+	def __make_column_alias(self):
 		"""
 		Prepare alias for columns from A to ZZ (limited to the number of columns set in SpreadSheet)
 
@@ -101,15 +101,18 @@ class SpreadSheet:
 		return letters[0:self.n_cols]
 
 
+
+
+
 if __name__ == '__main__':
 	excel = SpreadSheet([20, 20])
 	print(str(excel))
-	excel.set(0, 0, 'eric')
+	excel.set(0, 0, 1)
 	print(excel.get_by_pos(0, 0))
 	excel.set(0, 1, 5)
 	excel.set(0, 2, 10)
 	print(excel.get_by_pos(0, 2))
-	excel.set(0, 3, "=MAX(A1:A3)")
+	excel.set(0, 3, "=SUMA(A1;A1:A3;A1:A3)")
 
 	print(excel.get_by_pos(0, 1))
 	print(excel.get_by_pos(0, 2))

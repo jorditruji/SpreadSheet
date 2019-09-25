@@ -1,7 +1,7 @@
 import re
 import itertools
 from cell import Cell
-
+from statistics import mean 
 
 class Expression(Cell):
 	"""
@@ -24,8 +24,8 @@ class Expression(Cell):
 		self.operation_lambda = {
 			"SUMA": (lambda x, y: x + y),
 			"MIN": min,
-			"MAX": max
-			#"PROMEDIO": lambda a, b: a + b, lst / len(lst) 
+			"MAX": max, 
+			"PROMEDIO": mean
 
 		}
 
@@ -80,7 +80,6 @@ class Expression(Cell):
 					end_column = "".join(re.findall("[a-zA-Z]+", end))
 
 					# Extract row idx, as python array starts at poisition 0 we need to substract one to the row idxs
-
 					init_row = int(''.join([char for char in init if char not in init_column]))-1
 					end_row = int(''.join([char for char in end if char not in end_column]))-1
 					print("Start: {}\n End {}\n".format((init_column, init_row),(end_column, end_row)))
@@ -91,15 +90,20 @@ class Expression(Cell):
 
 					print("Start: {}\n End {}\n".format((init_column, init_row),(end_column, end_row)))
 
+					# Ranges on both axis
 					range_rows  = list(range(init_row, end_row+1, 1))
 					range_cols = list(range(init_column, end_column+1, 1))
 					print(range_rows)
+					# The total cells positions will be the cartesion product between x and y ranges
 					for position in itertools.product(range_cols, range_rows):
 						involved_idxs.append(position)
 
+				# Not slice
 				else:
+					# Get the column alias and row number
 					col = "".join(re.findall("[a-zA-Z]+", group))
 					row = int("".join([char for char in group if char not in col]))-1
+					# Append the position of the cell
 					involved_idxs.append((self.alias_list.index(col), row))
 
 			return self.operation_lambda[operation], involved_idxs
