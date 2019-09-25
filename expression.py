@@ -1,7 +1,11 @@
 import re
 import itertools
 from cell import Cell
-from statistics import mean 
+import numpy as np
+
+def average(lst): 
+    return sum(lst)/len(lst) 
+
 
 class Expression(Cell):
 	"""
@@ -25,7 +29,7 @@ class Expression(Cell):
 			"SUMA": (lambda x, y: x + y),
 			"MIN": min,
 			"MAX": max, 
-			"PROMEDIO": mean
+			"PROMEDIO": np.mean
 
 		}
 
