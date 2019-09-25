@@ -1,0 +1,280 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>spreadsheet module &mdash; SpreadSheet 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="SpreadSheet 0.1 documentation" href="index.html"/>
+        <link rel="prev" title="menu module" href="menu.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> SpreadSheet
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cell.html">cell module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expression.html">expression module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menu.html">menu module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">spreadsheet module</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SpreadSheet</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>spreadsheet module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/spreadsheet.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-spreadsheet">
+<span id="spreadsheet-module"></span><h1>spreadsheet module<a class="headerlink" href="#module-spreadsheet" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="spreadsheet.SpreadSheet">
+<em class="property">class </em><code class="sig-prename descclassname">spreadsheet.</code><code class="sig-name descname">SpreadSheet</code><span class="sig-paren">(</span><em class="sig-param">size</em><span class="sig-paren">)</span><a class="headerlink" href="#spreadsheet.SpreadSheet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This is the main class that will contain all the Cells and Expressions making a SpreadSheet.
+All the functions contained in the menu, should be executed here.</p>
+<p>Holds a maximum of 702 columns (from A to ZZ) even though it can be easily expanded</p>
+<dl class="method">
+<dt id="spreadsheet.SpreadSheet.get_cell_by_pos">
+<code class="sig-name descname">get_cell_by_pos</code><span class="sig-paren">(</span><em class="sig-param">posx</em>, <em class="sig-param">posy</em><span class="sig-paren">)</span><a class="headerlink" href="#spreadsheet.SpreadSheet.get_cell_by_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a Cell object by its position</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>posx</strong> (<em>int</em>) – Index position for column</p></li>
+<li><p><strong>posy</strong> (<em>int</em>) – Index position for row</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The Cell object itself</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="cell.html#cell.Cell" title="cell.Cell">Cell</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spreadsheet.SpreadSheet.get_value_by_pos">
+<code class="sig-name descname">get_value_by_pos</code><span class="sig-paren">(</span><em class="sig-param">posx</em>, <em class="sig-param">posy</em><span class="sig-paren">)</span><a class="headerlink" href="#spreadsheet.SpreadSheet.get_value_by_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a Cell value by its position</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>posx</strong> (<em>int</em>) – Index position for column</p></li>
+<li><p><strong>posy</strong> (<em>int</em>) – Index position for row</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The Cell value</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="cell.html#cell.Cell" title="cell.Cell">Cell</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spreadsheet.SpreadSheet.set">
+<code class="sig-name descname">set</code><span class="sig-paren">(</span><em class="sig-param">posx</em>, <em class="sig-param">posy</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#spreadsheet.SpreadSheet.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set values of the cell by coordinates</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>posx</strong> (<em>int</em>) – Index position for column</p></li>
+<li><p><strong>posy</strong> (<em>int</em>) – Index position for row</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="menu.html" class="btn btn-neutral" title="menu module" accesskey="p">← Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Eric Presas Valga, Jordi Morera Trujillo, Janna Escur Gelabert.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE: 'true'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

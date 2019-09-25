@@ -1,0 +1,318 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expression module &mdash; SpreadSheet 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="SpreadSheet 0.1 documentation" href="index.html"/>
+        <link rel="next" title="menu module" href="menu.html"/>
+        <link rel="prev" title="cell module" href="cell.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> SpreadSheet
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cell.html">cell module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">expression module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menu.html">menu module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spreadsheet.html">spreadsheet module</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SpreadSheet</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>expression module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/expression.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-expression">
+<span id="expression-module"></span><h1>expression module<a class="headerlink" href="#module-expression" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="expression.Expression">
+<em class="property">class </em><code class="sig-prename descclassname">expression.</code><code class="sig-name descname">Expression</code><span class="sig-paren">(</span><em class="sig-param">alias_list</em>, <em class="sig-param">expression=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expression.Expression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="cell.html#cell.Cell" title="cell.Cell"><code class="xref py py-class docutils literal notranslate"><span class="pre">cell.Cell</span></code></a></p>
+<p>Handles the expression inserted in a cell.</p>
+<dl class="attribute">
+<dt id="expression.Expression.alias_list">
+<code class="sig-name descname">alias_list</code><a class="headerlink" href="#expression.Expression.alias_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ordered alias list for the columns in Spreadsheet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="expression.Expression.expression">
+<code class="sig-name descname">expression</code><a class="headerlink" href="#expression.Expression.expression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Operation expression for the Cell. Default is None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="expression.Expression.operations">
+<code class="sig-name descname">operations</code><a class="headerlink" href="#expression.Expression.operations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Names for the possible operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>tupple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="expression.Expression.operation_lambda">
+<code class="sig-name descname">operation_lambda</code><a class="headerlink" href="#expression.Expression.operation_lambda" title="Permalink to this definition">¶</a></dt>
+<dd><p>Operation lambda definition for the possible operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="expression.Expression.code_2_idx">
+<code class="sig-name descname">code_2_idx</code><span class="sig-paren">(</span><em class="sig-param">alias</em><span class="sig-paren">)</span><a class="headerlink" href="#expression.Expression.code_2_idx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the index given an alias column</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>alias</strong> (<em>str</em>) – Alias for a column</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Index for the column</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="expression.Expression.parse_expression">
+<code class="sig-name descname">parse_expression</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expression.Expression.parse_expression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses operation expressions for a Cell to get the involved Cells to set its calculated value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The operation to be done, The list of index (col, row) for cells involved in the operation</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>lambda, list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="expression.Expression.set_expression">
+<code class="sig-name descname">set_expression</code><span class="sig-paren">(</span><em class="sig-param">expression</em><span class="sig-paren">)</span><a class="headerlink" href="#expression.Expression.set_expression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set expression a value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>expression</strong> (<em>str</em>) – Operation expression for a Cell.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="expression.average">
+<code class="sig-prename descclassname">expression.</code><code class="sig-name descname">average</code><span class="sig-paren">(</span><em class="sig-param">lst</em><span class="sig-paren">)</span><a class="headerlink" href="#expression.average" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="menu.html" class="btn btn-neutral float-right" title="menu module" accesskey="n">Next →</a>
+      
+      
+        <a href="cell.html" class="btn btn-neutral" title="cell module" accesskey="p">← Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Eric Presas Valga, Jordi Morera Trujillo, Janna Escur Gelabert.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE: 'true'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
