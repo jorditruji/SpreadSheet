@@ -26,10 +26,10 @@ class Expression(Cell):
 		self.expression = expression
 		self.operations = ("(SUMA)", "(MIN)", "(MAX)", "(PROMEDIO)")
 		self.operation_lambda = {
-			"SUMA": (lambda x, y: x + y),
+			"SUMA": sum,
 			"MIN": min,
 			"MAX": max, 
-			"PROMEDIO": np.mean
+			"PROMEDIO": average # Not working
 
 		}
 

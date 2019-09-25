@@ -75,7 +75,8 @@ class SpreadSheet:
 			# Perform operation of the data and return its result
 			print('Involved values',involved_values)
 			print("operation: ", operation)
-			result = reduce(operation, involved_values)
+			#result = reduce(operation, involved_values) DEPRECATED, WORKS ONLY WITH LAMBAS AND AVERAGE IS TOO HARD TO LAMDATIZE
+			result = operation(involved_values)
 			print("With result: ", result)
 			return result
 
@@ -112,7 +113,7 @@ if __name__ == '__main__':
 	excel.set(0, 1, 5)
 	excel.set(0, 2, 10)
 	print(excel.get_by_pos(0, 2))
-	excel.set(0, 3, "=PROMEDIO(A1:A3)")
+	excel.set(0, 3, "=SUMA(A1:A3)")
 
 	print(excel.get_by_pos(0, 1))
 	print(excel.get_by_pos(0, 2))
