@@ -22,7 +22,10 @@ class Expression(Cell):
 		self.expression = expression
 		self.operations = ("(SUMA)", "(MIN)", "(MAX)", "(PROMEDIO)")
 		self.operation_lambda = {
-			"SUMA": (lambda x, y: x + y)
+			"SUMA": (lambda x, y: x + y),
+			"MIN": min,
+			"MAX": max
+			#"PROMEDIO": lambda a, b: a + b, lst / len(lst) 
 
 		}
 
@@ -43,7 +46,7 @@ class Expression(Cell):
 		Parses operation expressions for a Cell to get the involved Cells to set its calculated value.
 
 		Returns:
-			str, list: The operation to be done, The list of index (col, row) for cells involved in the operation
+			lambda, list: The operation to be done, The list of index (col, row) for cells involved in the operation
 		"""
 		# Check amount of operators
 		operations = [re.findall(operation, self.expression) for operation in self.operations]
@@ -54,6 +57,8 @@ class Expression(Cell):
 		# Check if the formula is correct
 		if n_operations > 1:
 			raise ValueError("Chaining different operators is not implemented.")
+
+		# There is no operation at all
 		elif n_operations == 0:
 			raise ValueError("Formula is not valid")
 		else:
@@ -97,7 +102,7 @@ class Expression(Cell):
 					row = int("".join([char for char in group if char not in col]))-1
 					involved_idxs.append((self.alias_list.index(col), row))
 
-			return operation, involved_idxs
+			return self.operation_lambda[operation], involved_idxs
 
 	def code_2_idx(self, alias):
 		"""

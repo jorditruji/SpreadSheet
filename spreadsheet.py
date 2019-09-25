@@ -2,7 +2,7 @@ import numpy as np
 import string
 from cell import Cell
 from expression import Expression
-
+from functools import reduce
 
 class SpreadSheet:
 	"""
@@ -53,16 +53,36 @@ class SpreadSheet:
 		type_ = self.matrix[posx, posy].get_type()
 		#print(type_)
 		if type_ == 'formulae':
+			# Pass the expression to the handler
 			self.expression_handler.set_expression(self.matrix[posx, posy].value)
+
+			# Parse the expression
 			operation, involved_idxs = self.expression_handler.parse_expression()
-			#print(involved_idxs)
+
+			# Get the values of the cells involved on the formulae
 			involved_values = [self.matrix[posx, posy].value for posx, posy in involved_idxs]
-			#print(involved_values)
+
+			# Make sure the types of the cells are the same
+			involved_types = set([self.matrix[posx, posy].get_type() for posx, posy in involved_idxs])
+
+			# Make sure all the cells are of the same type and none of them are empty
+			if len(involved_types)>1:
+				raise TypeError("All cells involved on a formula should be of the same type")
+
+			if None in involved_types:
+				raise TypeError("Empty cells can not be used on formula")
+
+			# Perform operation of the data and return its result
+			print('Involved values',involved_values)
+			print("operation: ", operation)
+			result = reduce(operation, involved_values)
+			print("With result: ", result)
+			return result
 
 
 		else:
 			#print(posx, posy)
-			return self.matrix[posx, posy]
+			return self.matrix[posx, posy].value
 
 	def make_column_alias(self):
 		"""
@@ -85,15 +105,14 @@ if __name__ == '__main__':
 	excel = SpreadSheet([20, 20])
 	print(str(excel))
 	excel.set(0, 0, 'eric')
-	print(excel.get_by_pos(0, 0).value)
-	excel.set(0, 1, 10)
+	print(excel.get_by_pos(0, 0))
+	excel.set(0, 1, 5)
 	excel.set(0, 2, 10)
-	print(excel.get_by_pos(0, 2).value)
-	print(excel.matrix)
-	excel.set(0, 3, "=SUMA(A2:A3)")
+	print(excel.get_by_pos(0, 2))
+	excel.set(0, 3, "=MAX(A1:A3)")
 
-	print(excel.get_by_pos(0, 1).value)
-	print(excel.get_by_pos(0, 2).value)
+	print(excel.get_by_pos(0, 1))
+	print(excel.get_by_pos(0, 2))
 	excel.get_by_pos(0, 3)
 
 	'''
