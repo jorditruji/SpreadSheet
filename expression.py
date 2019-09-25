@@ -94,7 +94,7 @@ class Expression(Cell):
 
 					print("Start: {}\n End {}\n".format((init_column, init_row),(end_column, end_row)))
 
-					# Ranges on both axis
+					# Ranges on both axis(), take care with indices
 					range_rows  = list(range(init_row, end_row+1, 1))
 					range_cols = list(range(init_column, end_column+1, 1))
 					print(range_rows)

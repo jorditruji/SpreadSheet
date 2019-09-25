@@ -38,9 +38,9 @@ class SpreadSheet:
 		"""
 		self.matrix[posx, posy] = Cell(value=value)
 
-	def get_by_pos(self, posx, posy):
+	def get_value_by_pos(self, posx, posy):
 		"""
-		Get a Cell object by its position
+		Get a Cell value by its position
 
 		Args:
 			posx (int): Index position for column
@@ -85,6 +85,22 @@ class SpreadSheet:
 			#print(posx, posy)
 			return self.matrix[posx, posy].value
 
+
+	def get_cell_by_pos(self, posx, posy):
+		"""
+		Get a Cell object by its position
+
+		Args:
+			posx (int): Index position for column
+			posy (int): Index position for row
+
+		Returns:
+			Cell: The Cell object itself
+
+		"""
+		return self.matrix[posx, posy]
+
+
 	def __make_column_alias(self):
 		"""
 		Prepare alias for columns from A to ZZ (limited to the number of columns set in SpreadSheet)
@@ -109,14 +125,13 @@ if __name__ == '__main__':
 	excel = SpreadSheet([20, 20])
 	print(str(excel))
 	excel.set(0, 0, 1)
-	print(excel.get_by_pos(0, 0))
+	print(excel.get_value_by_pos(0, 0))
 	excel.set(0, 1, 5)
 	excel.set(0, 2, 10)
-	print(excel.get_by_pos(0, 2))
+	print(excel.get_value_by_pos(0, 2))
 	excel.set(0, 3, "=SUMA(A1:A3)")
-
-	print(excel.get_by_pos(0, 1))
-	print(excel.get_by_pos(0, 2))
+	print(excel.get_value_by_pos(0, 1))
+	print(excel.get_value_by_pos(0, 2))
 	excel.get_by_pos(0, 3)
 
 	'''

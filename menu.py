@@ -60,7 +60,7 @@ class Menu:
         print('Get a cell value')
         posx = input("Index of column: ")
         posy = input("Index of row: ")
-        cell = self.spreadsheet.get_by_pos(posx=int(posx), posy=int(posy))
+        cell = self.spreadsheet.get_value_by_pos(posx=int(posx), posy=int(posy))
         print(cell.value)
 
     def quit(self):
