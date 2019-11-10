@@ -24,15 +24,77 @@ public class Player {
 
     public Player(Color color, Board board) {
         this.color = color;
+        
+        //PEONS
+        Integer row = this.color==Color.BLACK ? 2: 7; 
         for (int i = 1; i<=8; i++){
-            Piece peo = new Piece("P",this.color);
+            Piece piece = new Piece("P",this.color);
             ArrayList<Integer> position = new ArrayList<Integer>();
-            Integer row = this.color==Color.BLACK ? 2: 7; 
             position.add(i);
             position.add(row);
             // For board initialization null is given to positionOrigin
-            this.putPiece(peo, board, position, null);
+            this.putPiece(piece, board, position, null);
         }
+        
+        // ROCKS
+        ArrayList<Integer> cols = new ArrayList<Integer>();
+        cols.add(1);
+        cols.add(8);
+        row = this.color==Color.BLACK ? 1: 8;
+        for (int i = 1; i < 3; i++) {
+            Piece piece = new Piece("R", this.color);
+            ArrayList<Integer> position = new ArrayList<Integer>();
+            position.add(cols.get(i));
+            position.add(row);
+            // For board initialization null is given to positionOrigin
+            this.putPiece(piece, board, position, null);
+        }
+        
+        // KNIGTS
+        cols = new ArrayList<Integer>();
+        cols.add(2);
+        cols.add(7);
+        row = this.color==Color.BLACK ? 1: 8;
+        for (int i = 1; i < 3; i++) {
+            Piece piece = new Piece("N", this.color);
+            ArrayList<Integer> position = new ArrayList<Integer>();
+            position.add(cols.get(i));
+            position.add(row);
+            // For board initialization null is given to positionOrigin
+            this.putPiece(piece, board, position, null);
+        }
+        
+        //BISHOPS
+        cols = new ArrayList<Integer>();
+        cols.add(3);
+        cols.add(6);
+        row = this.color==Color.BLACK ? 1: 8;
+        for (int i = 1; i < 3; i++) {
+            Piece piece = new Piece("B", this.color);
+            ArrayList<Integer> position = new ArrayList<Integer>();
+            position.add(cols.get(i));
+            position.add(row);
+            // For board initialization null is given to positionOrigin
+            this.putPiece(piece, board, position, null);
+        }
+        
+        //KING
+        Piece piece = new Piece("K", this.color);
+        row = this.color==Color.BLACK ? 1: 8;
+        ArrayList<Integer> position = new ArrayList<Integer>();
+        position.add(5);
+        position.add(row);
+        // For board initialization null is given to positionOrigin
+        this.putPiece(piece, board, position, null);
+        
+        // QUEEN
+        piece = new Piece("Q", this.color);
+        row = this.color==Color.BLACK ? 1: 8;
+        position = new ArrayList<Integer>();
+        position.add(4);
+        position.add(row);
+        
+        
     }
     
     public void putPiece(Piece piece, Board board, ArrayList<Integer> positionDestination, ArrayList<Integer> positionOrigin) {

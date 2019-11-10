@@ -1,2 +1,5 @@
 __pycache__
 *.pyc
+.idea/
+.netbeans_automatic_build
+.netbeans_automatic_build
