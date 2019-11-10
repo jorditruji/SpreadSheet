@@ -39,9 +39,45 @@ public class Board {
         }
         return result;
     }
-    public void setPiece(Piece piece, ArrayList<Integer> position){
-        this.getSquare(position).setPiece(piece);
+    public void setPiece(Piece piece, ArrayList<Integer> positionDestination, ArrayList<Integer> positionOrigin){
+        if(positionOrigin!=null){
+            Square originSquare = this.getSquare(positionOrigin);
+            if(originSquare.getPiece()!=null){
+                // TODO: CONTROL IF WE CAN MOVE
+                this.deletePiece(positionOrigin);
+            }
+            this.getSquare(positionDestination).setPiece(piece);
+        }else{
+            this.getSquare(positionDestination).setPiece(piece);
+        }
         
+    }
+    
+    public void deletePiece(ArrayList<Integer> position){
+        this.getSquare(position).setPiece(null);
+    }
+    
+    public boolean checkMovement(Piece piece, ArrayList<Integer> positionDestination, ArrayList<Integer> positionOrigin){
+        //TODO:
+        //Check if it's a correct movement for the piece in the board
+        return true;
+    }
+    
+    private ArrayList<Square> getSquaresInPath(Piece piece, ArrayList<Integer> positionDestination, ArrayList<Integer> positionOrigin){
+        //TODO:
+        //Get all the squares from the path
+        return new ArrayList<Square>();
+    }
+    
+    public boolean isPathFree(Piece piece, ArrayList<Integer> positionDestination, ArrayList<Integer> positionOrigin){
+        // returns ture if path is free
+        ArrayList<Square> squaresInPath = this.getSquaresInPath(piece, positionDestination, positionOrigin);
+        for(Square square: squaresInPath){
+            if(square.getPiece()!=null){
+                return false;
+            }
+        }
+        return true;
     }
 
     

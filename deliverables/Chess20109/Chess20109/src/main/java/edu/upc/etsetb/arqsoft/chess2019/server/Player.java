@@ -30,12 +30,13 @@ public class Player {
             Integer row = this.color==Color.BLACK ? 2: 7; 
             position.add(i);
             position.add(row);
-            this.putPiece(peo, board, position);
+            // For board initialization null is given to positionOrigin
+            this.putPiece(peo, board, position, null);
         }
     }
     
-    public void putPiece(Piece piece, Board board, ArrayList<Integer> position ) {
-        board.setPiece(piece, position);
+    public void putPiece(Piece piece, Board board, ArrayList<Integer> positionDestination, ArrayList<Integer> positionOrigin) {
+        board.setPiece(piece, positionDestination, positionOrigin);
         
     }
     

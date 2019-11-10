@@ -21,10 +21,9 @@ public class Game {
         this.players = new  ArrayList<Player>();
         this.board = new Board();
         
-      
+        Player player;
         for (Color color : Color.values()) { 
-        
-            Player player = new Player(color);
+            player = new Player(color, this.board);
             this.players.add(player);
             
         }
