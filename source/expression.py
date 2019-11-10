@@ -1,7 +1,6 @@
 import re
 import itertools
 from cell import Cell
-import numpy as np
 
 def average(lst): 
     return sum(lst)/len(lst) 
@@ -24,12 +23,12 @@ class Expression(Cell):
 			assert expression.count('(') == expression.count(')') == 1
 		self.alias_list = alias_list
 		self.expression = expression
-		self.operations = ("(SUMA)", "(MIN)", "(MAX)", "(PROMEDIO)")
+		self.operations = ("(SUMA)", "(MIN)", "(MAX)", "(PROMEDIO)") # Parenthesis required for further use in regexps
 		self.operation_lambda = {
 			"SUMA": sum,
 			"MIN": min,
 			"MAX": max, 
-			"PROMEDIO": average # Not working
+			"PROMEDIO": average 
 
 		}
 
@@ -47,7 +46,7 @@ class Expression(Cell):
 
 	def parse_expression(self):
 		"""
-		Parses operation expressions for a Cell to get the involved Cells to set its calculated value.
+		Parses operation expressions for a Cell to get the involved Cells and the operation to be done.
 
 		Returns:
 			lambda, list: The operation to be done, The list of index (col, row) for cells involved in the operation

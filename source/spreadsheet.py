@@ -34,6 +34,7 @@ class SpreadSheet:
 		Args:
 			posx (int): Index position for column
 			posy (int): Index position for row
+			value(any): Value to set
 
 		"""
 		self.matrix[posx, posy] = Cell(value=value)
