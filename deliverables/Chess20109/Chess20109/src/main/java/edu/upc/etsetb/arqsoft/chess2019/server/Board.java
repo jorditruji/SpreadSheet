@@ -39,6 +39,7 @@ public class Board {
         }
         return result;
     }
+    
     public void setPiece(Piece piece, ArrayList<Integer> positionDestination, ArrayList<Integer> positionOrigin){
         if(positionOrigin!=null){
             Square originSquare = this.getSquare(positionOrigin);

@@ -28,7 +28,7 @@ public class Player {
         //PEONS
         Integer row = this.color==Color.BLACK ? 2: 7; 
         for (int i = 1; i<=8; i++){
-            Piece piece = new Piece("P",this.color);
+            Piece piece = new PiecePawn("P",this.color);
             ArrayList<Integer> position = new ArrayList<Integer>();
             position.add(i);
             position.add(row);
@@ -41,8 +41,8 @@ public class Player {
         cols.add(1);
         cols.add(8);
         row = this.color==Color.BLACK ? 1: 8;
-        for (int i = 1; i < 3; i++) {
-            Piece piece = new Piece("R", this.color);
+        for (int i = 0; i < 2; i++) {
+            Piece piece = new PieceRook("R", this.color);
             ArrayList<Integer> position = new ArrayList<Integer>();
             position.add(cols.get(i));
             position.add(row);
@@ -55,8 +55,8 @@ public class Player {
         cols.add(2);
         cols.add(7);
         row = this.color==Color.BLACK ? 1: 8;
-        for (int i = 1; i < 3; i++) {
-            Piece piece = new Piece("N", this.color);
+        for (int i = 0; i < 2; i++) {
+            Piece piece = new PieceKnight("N", this.color);
             ArrayList<Integer> position = new ArrayList<Integer>();
             position.add(cols.get(i));
             position.add(row);
@@ -69,8 +69,8 @@ public class Player {
         cols.add(3);
         cols.add(6);
         row = this.color==Color.BLACK ? 1: 8;
-        for (int i = 1; i < 3; i++) {
-            Piece piece = new Piece("B", this.color);
+        for (int i = 0; i < 2; i++) {
+            Piece piece = new PieceBishop("B", this.color);
             ArrayList<Integer> position = new ArrayList<Integer>();
             position.add(cols.get(i));
             position.add(row);
@@ -79,7 +79,7 @@ public class Player {
         }
         
         //KING
-        Piece piece = new Piece("K", this.color);
+        Piece piece = new PieceKing("K", this.color);
         row = this.color==Color.BLACK ? 1: 8;
         ArrayList<Integer> position = new ArrayList<Integer>();
         position.add(5);
@@ -88,7 +88,7 @@ public class Player {
         this.putPiece(piece, board, position, null);
         
         // QUEEN
-        piece = new Piece("Q", this.color);
+        piece = new PieceQueen("Q", this.color);
         row = this.color==Color.BLACK ? 1: 8;
         position = new ArrayList<Integer>();
         position.add(4);
@@ -99,6 +99,13 @@ public class Player {
     
     public void putPiece(Piece piece, Board board, ArrayList<Integer> positionDestination, ArrayList<Integer> positionOrigin) {
         board.setPiece(piece, positionDestination, positionOrigin);
+        
+    }
+    
+    public void move(Piece piece, int rO, int cO, int rD, int cD, Board b ){
+        
+        piece.canReachDestination(rO, cO, rD, cD, b);
+        
         
     }
     
