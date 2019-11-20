@@ -5,6 +5,8 @@
  */
 package edu.upc.etsetb.arqsoft.chess2019.server;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author jordi
@@ -20,8 +22,8 @@ public class PieceBishop extends Piece {
     {
         boolean valid = false;
         int variationC,variationR;
-        variationC = cO - cD;
-        variationR = rO - rD;
+        variationC = Math.abs(cO - cD);
+        variationR = Math.abs(rO - rD);
         
         return variationC == variationR;
     }
@@ -29,6 +31,24 @@ public class PieceBishop extends Piece {
     @Override
     public boolean isPathFree(int rO, int cO, int rD, int cD, Board board) throws NoPathFreeException
     {
-        return false;
+        boolean isFree = false;
+        int distanceX = cD - cO;
+        int distanceY = rD - cD;
+        int count = 0;
+        int positionX = cO;
+        int positionY = rO;
+        ArrayList<Integer> coordinates;
+        while(positionX<cD && positionY<rD){
+            positionY ++;
+            positionX ++;
+            coordinates  = new ArrayList<Integer>();
+            coordinates.add(positionX);
+            coordinates.add(positionY);
+            Piece piece = board.getSquare(coordinates).getPiece();
+            if(piece!=null){
+                return false;
+            }
+        }
+        return true;
     }
 }

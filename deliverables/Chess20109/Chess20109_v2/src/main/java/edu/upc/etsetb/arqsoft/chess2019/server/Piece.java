@@ -38,20 +38,31 @@ public abstract class Piece {
     public abstract boolean isPieceMovement(int rO, int cO, int rD, int cD) throws NoPieceMovementException;
     public abstract boolean isPathFree(int rO, int cO, int rD, int cD, Board board) throws NoPathFreeException;
 
-    public void canReachDestination(int rO, int cO, int rD, int cD, Board b)
+    public String canReachDestination(int rO, int cO, int rD, int cD, Board b) 
     {
+        String message = "";
         try{
            boolean isValidMovement = this.isPieceMovement(rO, cO, rD, cD);
            if (!isValidMovement)
            {
-                String message = "E The requested movement is not valid for the piece.";
+                message = "E The requested movement is not valid for the piece.";
    
-           }
+           }else{
+               try{
+                    boolean isPathFree = this.isPathFree(rO, cO, rD, cD, b);
+                    if (!isPathFree){
+                        message = "E The requested path is not free for the piece.";
+                    }
+               }catch(NoPathFreeException e){
+                   message = "E Failed to check the path";
+               }
+           }        
         }
         catch(NoPieceMovementException e ){
-            String message = "E Failed to evaluate movement";
+            message = "E Failed to evaluate movement";
 
         }
+        return message;
     }
 
     public static class NoPieceMovementException extends Exception {

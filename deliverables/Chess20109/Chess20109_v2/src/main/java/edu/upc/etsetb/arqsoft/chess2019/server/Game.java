@@ -44,7 +44,16 @@ public class Game {
     }
 
     public ArrayList<Player> getPlayers() {
-        return players;
+        return this.players;
+    }
+    
+    public Player getActualPlayer(Color color){
+        for(Player player: this.getPlayers()){
+            if (player.getColor().equals(color)){
+                return player;
+            }
+        }
+        return null;
     }
 
     public void setPlayers(ArrayList<Player> players) {
@@ -96,8 +105,15 @@ public class Game {
                 this.protMngr.sendFromServerToClient("E Destination square is already occupied by one of your pieces");
                 return;   
             }
-        }        
-        pieceOrigen.canReachDestination(rO, cO, rD, cD, this.board);
+        }
+
+        Player actualPlayer = this.getActualPlayer(this.turn);
+        String message = actualPlayer.move(pieceOrigen, rO, cO, rD, cD, board);
+        if(!message.isEmpty()){
+            this.protMngr.sendFromServerToClient(message);
+        }
+        //Proceed to move
+        
         /* 
         DO NOT CHANGE THE CODE BELOW.
         FINAL PART OF THE METHOD. IF ARRIVED HERE, THE MOVEMENT CAN BE PERFORMED

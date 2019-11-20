@@ -102,11 +102,10 @@ public class Player {
         
     }
     
-    public void move(Piece piece, int rO, int cO, int rD, int cD, Board b ){
+    public String move(Piece piece, int rO, int cO, int rD, int cD, Board b ){
         
-        piece.canReachDestination(rO, cO, rD, cD, b);
-        
-        
+        String message = piece.canReachDestination(rO, cO, rD, cD, b);
+        return message;
     }
     
 }
