@@ -84,31 +84,40 @@ public class Game {
         //         this.protMngr.sendFromServerToClient("E this is an error message");
         // Check if there was actually a piece in the position
 
-        Piece pieceOrigen = this.getPiece(rO, cO);
-        if (pieceOrigen == null){
+        //TODO: Change get pieces, do it inside Square.
+        ArrayList<Integer> position = new ArrayList<Integer>();
+        position.add(cO);
+        position.add(rO);
+        boolean isPieceInSquare = this.board.isPieceInSquare(position);
+        if (!isPieceInSquare){
             this.protMngr.sendFromServerToClient("E Square is empty. No piece to move");
             return;
         }
         
         //CHECK THE PIECE BELONGS TO THE PLAYER WHO IS MOVING
-        if (!pieceOrigen.getColor().equals(this.turn)){
+        Color colorPiece = this.board.getColorPiece(position);
+        if (!colorPiece.equals(this.turn)){
             this.protMngr.sendFromServerToClient("E Requested piece does not belong to you. Please do not cheat.");
             return;           
         }
         
         //CHECK FOR DESTINATION SQUARE
-        Piece pieceDestino = this.getPiece(rD, rD);
+        position = new ArrayList<Integer>();
+        position.add(cD);
+        position.add(rD);
+        isPieceInSquare = this.board.isPieceInSquare(position);
         
         //CHECK IF THE SQUARE DESTINY IS EMPTY
-        if(pieceDestino != null){
-            if (pieceDestino.getColor().equals(this.turn)){
+        if(isPieceInSquare){
+            colorPiece = this.board.getColorPiece(position);
+            if (colorPiece.equals(this.turn)){
                 this.protMngr.sendFromServerToClient("E Destination square is already occupied by one of your pieces");
                 return;   
             }
         }
 
         Player actualPlayer = this.getActualPlayer(this.turn);
-        String message = actualPlayer.move(pieceOrigen, rO, cO, rD, cD, board);
+        String message = actualPlayer.move(rO, cO, rD, cD, board);
         if(!message.isEmpty()){
             this.protMngr.sendFromServerToClient(message);
         }

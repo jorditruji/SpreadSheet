@@ -32,15 +32,17 @@ public class PieceBishop extends Piece {
     public boolean isPathFree(int rO, int cO, int rD, int cD, Board board) throws NoPathFreeException
     {
         boolean isFree = false;
-        int distanceX = cD - cO;
-        int distanceY = rD - cD;
+        float distanceX = cD - cO;
+        float distanceY = rD - rO;
+        int signX = (int) Math.signum(distanceX);
+        int signY = (int) Math.signum(distanceY);
         int count = 0;
         int positionX = cO;
         int positionY = rO;
         ArrayList<Integer> coordinates;
-        while(positionX<cD && positionY<rD){
-            positionY ++;
-            positionX ++;
+        while(count < Math.abs(distanceX)){
+            positionY = positionY + signY;
+            positionX = positionX + signX;
             coordinates  = new ArrayList<Integer>();
             coordinates.add(positionX);
             coordinates.add(positionY);
@@ -48,6 +50,7 @@ public class PieceBishop extends Piece {
             if(piece!=null){
                 return false;
             }
+            count ++;
         }
         return true;
     }

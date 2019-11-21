@@ -80,6 +80,23 @@ public class Board {
         }
         return true;
     }
+    
+    public boolean isPieceInSquare(ArrayList<Integer> position){
+        Square square = this.getSquare(position);
+        if (square.getPiece()!=null){
+            return true;
+        }
+        return false;
+    }
+    
+    public Color getColorPiece(ArrayList<Integer> position){
+        Square square = this.getSquare(position);
+        if(square.getPiece()!=null){
+           Color color = square.getPiece().getColor();
+           return color;
+        }
+        return null;
+    }
 
     
     

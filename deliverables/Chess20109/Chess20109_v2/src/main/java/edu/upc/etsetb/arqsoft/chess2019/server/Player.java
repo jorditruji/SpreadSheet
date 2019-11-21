@@ -102,8 +102,11 @@ public class Player {
         
     }
     
-    public String move(Piece piece, int rO, int cO, int rD, int cD, Board b ){
-        
+    public String move(int rO, int cO, int rD, int cD, Board b ){
+        ArrayList<Integer> positionOrigin = new ArrayList<Integer>();
+        positionOrigin.add(cO);
+        positionOrigin.add(rO);
+        Piece piece = b.getSquare(positionOrigin).getPiece();
         String message = piece.canReachDestination(rO, cO, rD, cD, b);
         return message;
     }
