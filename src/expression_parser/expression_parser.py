@@ -1,4 +1,4 @@
-from operations import MEAN, MAX, MIN, SUM
+from src.operations import MEAN, MAX, MIN, SUM
 
 
 class ExpressionParser(object):

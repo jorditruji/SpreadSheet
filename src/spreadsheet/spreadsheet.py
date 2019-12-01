@@ -1,6 +1,6 @@
 import string
 from src.cells import Cell
-
+from src.expression_parser import expression_parser
 
 class SpreadSheet:
 	"""
