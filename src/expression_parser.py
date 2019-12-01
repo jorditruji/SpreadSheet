@@ -1,5 +1,4 @@
-def average(lst):
-    return sum(lst)/len(lst)
+from operations import MEAN, MAX, MIN, SUM
 
 
 class ExpressionParser(object):
@@ -15,10 +14,10 @@ class ExpressionParser(object):
     def __init__(self):
         self.operations = ("(SUMA)", "(MIN)", "(MAX)", "(PROMEDIO)")  # Parenthesis required for further use in regexps
         self.operation_lambda = {
-            "SUMA": sum,
-            "MIN": min,
-            "MAX": max,
-            "PROMEDIO": average
+            "SUMA": SUM.do,
+            "MIN": MIN.do,
+            "MAX": MAX.do,
+            "PROMEDIO": MEAN.do
 
         }
 
@@ -50,18 +49,6 @@ class ExpressionParser(object):
         """
         pass
 
-    @classmethod
-    def evaluate_expression(cls, expression):
-        """
-        Parses string expressions, evaluates and returns the result of the operation.
-
-        Args:
-            expression (str): Cell expression (i.e SUMA(A1:A22))
-
-        Returns:
-            float: Result for the evaluation
-
-        """
 
 
 

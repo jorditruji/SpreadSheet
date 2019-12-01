@@ -1,5 +1,5 @@
 import sys
-from spreadsheet import SpreadSheet
+from spreadsheet import spreadsheet
 
 
 class Menu:
@@ -8,10 +8,10 @@ class Menu:
     """
     def __init__(self):
         # Options to be displayed in a .txt file
-        file_text = open("menu_options.txt", "r")
+        file_text = open("resources/menu_options.txt", "r")
         self.text_menu = file_text.read()
         # Init spreadsheet by default size [20, 20]
-        self.spreadsheet = SpreadSheet([20, 20])
+        self.spreadsheet = spreadsheet.__init__([20, 20])
         self.choices = {
                 "1": self.new_spreadsheet,
                 "2": self.save_spreadsheet,

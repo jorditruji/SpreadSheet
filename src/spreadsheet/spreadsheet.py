@@ -1,5 +1,5 @@
 import string
-from .cells import Cell
+from src.cells import Cell
 
 
 class SpreadSheet:
@@ -10,7 +10,7 @@ class SpreadSheet:
 	Holds a maximum of 702 columns (from A to ZZ) even though it can be easily expanded
 	"""
 
-	def __init__(self, size):
+	def __init__(self, size=[5, 5]):
 
 		# Sizes of the spreadsheet
 		self.n_rows = size[0]
@@ -21,7 +21,7 @@ class SpreadSheet:
 
 		self.cells = []
 		row = 1
-		for i in range(1, 703):
+		for i in range(1, self.n_cols):
 			cell = Cell(position=(i, row), alias=self.columns_alias[i])
 			self.cells.append(cell)
 
@@ -81,6 +81,29 @@ class SpreadSheet:
 		# limit to n_cols
 		return letters[0:self.n_cols]
 
+	def evaluate_expression(self, cell):
+		"""
+		Parses string cell expression and returns the value.
+		Args:
+			cell (ExpressionCell): cell to be evaluated
 
-if __name__ == '__main__':
-	pass
+		Returns:
+			float: value for expression
+		"""
+		pass
+
+	def copy_cell(self, alias_origin, alias_dest):
+		"""
+		Copy the the type of the cell and adapts to the destination cell
+		Args:
+			alias_origin (str): Alias of the cell to be copied
+			alias_dest (str): Alias of cell to be set
+
+		Returns:
+			Cell: cell destinnation with coppied contents and adapted as the specifications
+
+		"""
+		pass
+
+
+spreadsheet = SpreadSheet()
