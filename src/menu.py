@@ -1,5 +1,5 @@
 import sys
-from spreadsheet import spreadsheet
+from src.spreadsheet import SpreadSheet
 
 
 class Menu:
@@ -11,7 +11,7 @@ class Menu:
         file_text = open("resources/menu_options.txt", "r")
         self.text_menu = file_text.read()
         # Init spreadsheet by default size [20, 20]
-        self.spreadsheet = spreadsheet.__init__([20, 20])
+        self.spreadsheet = None
         self.choices = {
                 "1": self.new_spreadsheet,
                 "2": self.save_spreadsheet,
@@ -40,9 +40,8 @@ class Menu:
 
     def new_spreadsheet(self):
         print('New Spreadsheet Selected')
-        n_rows = input("Number of rows for spreadsheet: ")
-        n_cols = input("Number of columns for spreadsheet: ")
-        self.spreadsheet = SpreadSheet([int(n_rows), int(n_cols)])
+        self.spreadsheet = SpreadSheet()
+        print('Spreadsheet created !')
 
     def save_spreadsheet(self):
         print('Save Spreadsheet Selected')
@@ -51,13 +50,19 @@ class Menu:
         print('Load Spreadsheet Selected')
 
     def set_cell_value(self):
-        print('Set a cell value')
-        posx = input("Index of column: ")
-        posy = input("Index of row: ")
-        value = input("Enter a value or expression: ")
+        print('Set a cell value Selected')
+        is_valid = False
         # TODO: Com diferenciem el tipus de valor entre string i numeric? -> En un input el valor sempre es string
         # Mirar si es numero??
-        self.spreadsheet.set(posx=int(posx), posy=int(posy), value=value)
+        while is_valid is not True:
+            try:
+                alias = input("Enter cell alias: ")
+                value = input("Enter a value or expression: ")
+                self.spreadsheet.set(alias=alias, value=value)
+                is_valid = True
+            except:
+                print('Set cell content again...')
+
 
     def get_cell_value(self):
         print('Get a cell value')

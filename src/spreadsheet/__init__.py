@@ -1,1 +1,1 @@
-from .spreadsheet import spreadsheet
+from .spreadsheet import SpreadSheet

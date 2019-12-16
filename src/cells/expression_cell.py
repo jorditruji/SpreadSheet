@@ -7,7 +7,6 @@ class ExpressionCell(Cell):
 
     Attributes:
         value (int, float): Cell value
-        position (tupple): Position (col, row) of the cell
         alias (str): Alias for the cell
         expression (str): String expression for the cell
 
@@ -20,8 +19,8 @@ class ExpressionCell(Cell):
         "PROMEDIO"
     ]
 
-    def __init__(self, value, position, alias, expresion):
-        super().__init__(position=position, alias=alias)
+    def __init__(self, value, alias, expresion):
+        super().__init__(alias=alias)
         self.type = 'expression'
         self.expression = expresion
         self.value = value

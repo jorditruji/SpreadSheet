@@ -12,7 +12,7 @@ class ExpressionParser(object):
 
     """
     def __init__(self):
-        self.operations = ("(SUMA)", "(MIN)", "(MAX)", "(PROMEDIO)")  # Parenthesis required for further use in regexps
+        self.operations = ("SUMA", "MIN", "MAX", "PROMEDIO")  # Parenthesis required for further use in regexps
         self.operation_lambda = {
             "SUMA": SUM.do,
             "MIN": MIN.do,
@@ -20,6 +20,8 @@ class ExpressionParser(object):
             "PROMEDIO": MEAN.do
 
         }
+
+
 
     @classmethod
     def parse_locations(cls, alias):
@@ -48,6 +50,48 @@ class ExpressionParser(object):
 
         """
         pass
+
+    @classmethod
+    def parse_value_cell(cls, value):
+        """
+        Parses input value
+        Args:
+            value (str): String or numeric value
+
+        Returns:
+            str: type of cell.
+        """
+
+        type = 'text'
+        if value.isdigit():
+            type = 'numeric'
+
+        # TODO: type expression to be done
+        return type
+
+    @classmethod
+    def parse_alias(cls, alias):
+        """
+        Parses cell alias
+        Args:
+            alias (str): Cell alias
+
+        Returns:
+            dict: col, row
+        """
+        col = ''
+        row = ''
+        for c in alias:
+            if c.isdigit():
+                row += c
+            else:
+                col += c
+
+        return {
+            "col": col,
+            "row": int(row)
+        }
+
 
 
 

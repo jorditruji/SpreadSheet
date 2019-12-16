@@ -1,6 +1,7 @@
 import string
-from src.cells import Cell
+from src.cells import Cell, ExpressionCell, NumericCell, TextCell
 from src.expression_parser import expression_parser
+
 
 class SpreadSheet:
 	"""
@@ -10,60 +11,59 @@ class SpreadSheet:
 	Holds a maximum of 702 columns (from A to ZZ) even though it can be easily expanded
 	"""
 
-	def __init__(self, size=[5, 5]):
-
-		# Sizes of the spreadsheet
-		self.n_rows = size[0]
-		self.n_cols = size[1]
+	def __init__(self):
 
 		# Contains column alias to make it easier to evaluate expression
 		self.columns_alias = self.__make_column_alias()
 
+		self.cell_maker = {
+			"text": TextCell,
+			"numeric": NumericCell,
+			"expression": ExpressionCell
+		}
+
 		self.cells = []
-		row = 1
-		for i in range(1, self.n_cols):
-			cell = Cell(position=(i, row), alias=self.columns_alias[i])
-			self.cells.append(cell)
+		self.max_rows = 100
 
-	def set(self, posx, posy, value):
+	def set(self, alias, value):
 		"""
-		Set values of the cell by coordinates
+		Set values of the cell by cell alias
 
 		Args:
-			posx (int): Index position for column
-			posy (int): Index position for row
-			value(any): Value to set
+			alias (str): Alias of cell
+			value (any): Value to set
 
 		"""
-		pass
+		# Parse alias
+		position = expression_parser.ExpressionParser.parse_alias(alias=alias)
+		if position['col'] not in self.columns_alias:
+			print('Column {} do not exist'.format(position['col']))
+			raise NameError()
+		if position['row']>self.max_rows:
+			print('Row {} too high'.format(position['row']))
+			raise IndexError()
 
-	def get_value_by_pos(self, posx, posy):
+		# Parse value
+		type = expression_parser.ExpressionParser.parse_value_cell(value=value)
+		cell = self.cell_maker[type](alias=alias, value=value)
+		self.cells.append(cell)
+
+	def get_cell(self, alias):
 		"""
-		Get a Cell value by its position
+		Get a Cell object by its alias
 
 		Args:
-			posx (int): Index position for column
-			posy (int): Index position for row
-
-		Returns:
-			Cell: The Cell value
-
-		"""
-		pass
-
-	def get_cell_by_pos(self, posx, posy):
-		"""
-		Get a Cell object by its position
-
-		Args:
-			posx (int): Index position for column
-			posy (int): Index position for row
+			alias (str): Alias of cell
 
 		Returns:
 			Cell: The Cell object itself
 
 		"""
-		pass
+		for cell in self.cells:
+			if cell.alias is alias:
+				return cell
+		return None
+
 
 	def __make_column_alias(self):
 		"""
@@ -79,7 +79,7 @@ class SpreadSheet:
 		letters.extend([(i + b).upper() for i in letters for b in letters])
 
 		# limit to n_cols
-		return letters[0:self.n_cols]
+		return letters
 
 	def evaluate_expression(self, cell):
 		"""
@@ -106,4 +106,3 @@ class SpreadSheet:
 		pass
 
 
-spreadsheet = SpreadSheet()

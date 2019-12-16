@@ -11,8 +11,8 @@ class NumericCell(Cell):
         alias (str): Alias for the cell
 
     """
-    def __init__(self, value, position, alias):
-        super().__init__(position=position, alias=alias)
+    def __init__(self, value, alias):
+        super().__init__(alias=alias)
         self.type = 'numeric'
-        self.value = value
+        self.value = float(value)
 
