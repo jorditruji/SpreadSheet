@@ -52,23 +52,22 @@ class Menu:
     def set_cell_value(self):
         print('Set a cell value Selected')
         is_valid = False
-        # TODO: Com diferenciem el tipus de valor entre string i numeric? -> En un input el valor sempre es string
-        # Mirar si es numero??
+
+        # is_valid condition to retry the input values
         while is_valid is not True:
             try:
                 alias = input("Enter cell alias: ")
                 value = input("Enter a value or expression: ")
                 self.spreadsheet.set(alias=alias, value=value)
                 is_valid = True
-            except:
+            except Exception as e:
+                print(e)
                 print('Set cell content again...')
-
 
     def get_cell_value(self):
         print('Get a cell value')
-        posx = input("Index of column: ")
-        posy = input("Index of row: ")
-        cell = self.spreadsheet.get_value_by_pos(posx=int(posx), posy=int(posy))
+        alias = input("Enter cell alias: ")
+        cell = self.spreadsheet.get_cell(alias=alias)
         print(cell.value)
 
     def quit(self):

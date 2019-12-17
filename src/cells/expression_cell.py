@@ -19,10 +19,10 @@ class ExpressionCell(Cell):
         "PROMEDIO"
     ]
 
-    def __init__(self, value, alias, expresion):
-        super().__init__(alias=alias)
+    def __init__(self, params):
+        super().__init__(alias=params['alias'])
         self.type = 'expression'
-        self.expression = expresion
-        self.value = value
+        self.expression = params['expression']
+        self.value = None
 
 

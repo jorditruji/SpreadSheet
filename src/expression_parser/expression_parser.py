@@ -59,15 +59,20 @@ class ExpressionParser(object):
             value (str): String or numeric value
 
         Returns:
-            str: type of cell.
+            tupple: (type of cell, expression if applies).
         """
 
         type = 'text'
+        expression = None
         if value.isdigit():
             type = 'numeric'
 
-        # TODO: type expression to be done
-        return type
+        # Expressions should start with =
+        if value[0] == '=':
+            type = 'expression'
+            expression = value
+
+        return type, expression
 
     @classmethod
     def parse_alias(cls, alias):

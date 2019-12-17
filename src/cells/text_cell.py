@@ -11,8 +11,8 @@ class TextCell(Cell):
 
     """
 
-    def __init__(self, value, alias):
-        super().__init__(alias=alias)
+    def __init__(self, params):
+        super().__init__(alias=params['alias'])
         self.type = 'text'
-        self.value = value
+        self.value = params['value']
 
