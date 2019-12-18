@@ -61,14 +61,17 @@ class Menu:
                 self.spreadsheet.set(alias=alias, value=value)
                 is_valid = True
             except Exception as e:
-                print(e)
+                print(e.custom_message)
                 print('Set cell content again...')
 
     def get_cell_value(self):
         print('Get a cell value')
         alias = input("Enter cell alias: ")
-        cell = self.spreadsheet.get_cell(alias=alias)
-        print(cell.value)
+        try:
+            cell = self.spreadsheet.get_cell(alias=alias)
+            cell.printify()
+        except Exception as e:
+            print(e.custom_message)
 
     def quit(self):
         print("Bye Nerd!")

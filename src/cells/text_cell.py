@@ -16,3 +16,10 @@ class TextCell(Cell):
         self.type = 'text'
         self.value = params['value']
 
+    def printify(self):
+        print('=================GET CELL====================')
+        print('CELL: {}'.format(self.alias))
+        print('TYPE: {}'.format(self.type.upper()))
+        print('VALUE: {}'.format(self.value))
+        print('\n')
+

@@ -1,7 +1,7 @@
 import string
 from src.cells import Cell, ExpressionCell, NumericCell, TextCell
 from src.expression_parser import expression_parser
-from src.exceptions import AliasNotFound
+from src.exceptions import AliasNotFound, CellNotFound
 
 
 class SpreadSheet:
@@ -38,9 +38,9 @@ class SpreadSheet:
 		# Parse alias
 		position = expression_parser.ExpressionParser.parse_alias(alias=alias)
 		if position['col'] not in self.columns_alias:
-			raise AliasNotFound('Column {} do not exist'.format(position['col']))
+			raise AliasNotFound(col=position['col'])
 		if position['row'] > self.max_rows:
-			raise AliasNotFound('Row {} too high'.format(position['row']))
+			raise AliasNotFound(row=position['row'])
 
 		# Parse value
 		type, expression = expression_parser.ExpressionParser.parse_value_cell(value=value)
@@ -66,7 +66,8 @@ class SpreadSheet:
 		for cell in self.cells:
 			if cell.alias == alias:
 				return cell
-		return None
+
+		raise CellNotFound(alias=alias)
 
 
 	def __make_column_alias(self):

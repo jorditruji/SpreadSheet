@@ -6,9 +6,7 @@ class ExpressionCell(Cell):
     Holds the additional content for expression cells
 
     Attributes:
-        value (int, float): Cell value
-        alias (str): Alias for the cell
-        expression (str): String expression for the cell
+        params (dict)
 
     """
 
@@ -23,6 +21,20 @@ class ExpressionCell(Cell):
         super().__init__(alias=params['alias'])
         self.type = 'expression'
         self.expression = params['expression']
+        self.string_expression = params['value']
         self.value = None
+
+    def printify(self):
+        print('=================GET CELL====================')
+        print('CELL: {}'.format(self.alias))
+        print('TYPE: {}'.format(self.type.upper()))
+        print('VALUE: {}'.format(self.value))
+        print('EXPRESSION: {}'.format(self.string_expression))
+        printer = self.expression.prettyprint()
+        print(printer)
+        print('\n')
+
+
+
 
 

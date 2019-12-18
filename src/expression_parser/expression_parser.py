@@ -1,5 +1,5 @@
 from src.operations import MEAN, MAX, MIN, SUM
-
+from . import formula_parser
 
 class ExpressionParser(object):
     """
@@ -20,22 +20,7 @@ class ExpressionParser(object):
             "PROMEDIO": MEAN.do
 
         }
-
-
-
-    @classmethod
-    def parse_locations(cls, alias):
-        """
-        Converts SpreadSheet alias into cell coordinates.
-
-        Args:
-            alias (str): Cell or cells alias (i.e A1:A12)
-
-        Returns:
-            list: Positions in a list of tupples (pos_x, pos_y)
-
-        """
-        pass
+        self.cells_values = []
 
     @classmethod
     def parse_operation(cls, expression):
@@ -49,7 +34,7 @@ class ExpressionParser(object):
             function: Function which implements the detected operation in expression.
 
         """
-        pass
+
 
     @classmethod
     def parse_value_cell(cls, value):
@@ -63,16 +48,17 @@ class ExpressionParser(object):
         """
 
         type = 'text'
-        expression = None
         if value.isdigit():
             type = 'numeric'
 
         # Expressions should start with =
         if value[0] == '=':
             type = 'expression'
-            expression = value
+            # Parse expression as expression tokens
+            formula_parser.parse(value)
+            return type, formula_parser
 
-        return type, expression
+        return type, None
 
     @classmethod
     def parse_alias(cls, alias):
@@ -96,8 +82,4 @@ class ExpressionParser(object):
             "col": col,
             "row": int(row)
         }
-
-
-
-
 
