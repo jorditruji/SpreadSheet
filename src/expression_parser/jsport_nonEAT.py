@@ -551,6 +551,5 @@ class ExcelParser(ExcelParserTokens):
         return output
 
 
-formula_parser = ExcelParser()
 
 

@@ -5,4 +5,5 @@ SpreadSheet Menu:
 3. Load
 4. Set Value
 5. Get Value
-6. Quit
+6. Copy cell
+7. Quit

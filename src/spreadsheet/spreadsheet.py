@@ -1,7 +1,10 @@
 import string
-from src.cells import Cell, ExpressionCell, NumericCell, TextCell
+from src.cells import CellFactory
 from src.expression_parser import expression_parser
-from src.exceptions import AliasNotFound, CellNotFound
+from src.exceptions import AliasNotFound, CellNotFound, PathNotFound
+import pickle
+import os.path
+from os import path
 
 
 class SpreadSheet:
@@ -16,13 +19,7 @@ class SpreadSheet:
 
 		# Contains column alias to make it easier to evaluate expression
 		self.columns_alias = self.__make_column_alias()
-
-		self.cell_maker = {
-			"text": TextCell,
-			"numeric": NumericCell,
-			"expression": ExpressionCell
-		}
-
+		self.cell_factory = CellFactory()
 		self.cells = []
 		self.max_rows = 100
 
@@ -49,7 +46,7 @@ class SpreadSheet:
 			"value": value,
 			"expression": expression
 		}
-		cell = self.cell_maker[type](params=params)
+		cell = self.cell_factory.create_cell(typ=type, params=params)
 		self.cells.append(cell)
 
 	def get_cell(self, alias):
@@ -63,12 +60,52 @@ class SpreadSheet:
 			Cell: The Cell object itself
 
 		"""
-		for cell in self.cells:
+		for indx, cell in enumerate(self.cells):
 			if cell.alias == alias:
-				return cell
+				return cell, indx
 
 		raise CellNotFound(alias=alias)
 
+	def remove_cell(self, alias):
+		"""
+		Removes cell from the list
+		Args:
+			alias (str): Cell alias
+		"""
+		try:
+			_, indx = self.get_cell(alias)
+			self.cells.pop(indx)
+		except Exception as e:
+			print(e.custom_message)
+
+	def save(self, name, path_='resources/'):
+		"""
+		Save Spreadsheet class
+
+		"""
+		if path.exists(path_) is False:
+			raise PathNotFound(path_)
+
+		with open('{}{}.pkl'.format(path_, name), 'wb') as output:
+			pickle.dump(self, output)
+
+	@classmethod
+	def load(cls, name):
+		"""
+		Load Spreadsheet class
+		Args:
+			name: Name of the file
+
+		"""
+		path_ = 'resources/'
+		directory = '{}{}.pkl'.format(path_, name)
+		if path.exists(directory) is False:
+			raise PathNotFound(directory)
+
+		with open(directory, 'rb') as input:
+			spreadsheet = pickle.load(input)
+
+		return spreadsheet
 
 	def __make_column_alias(self):
 		"""
@@ -97,17 +134,55 @@ class SpreadSheet:
 		"""
 		pass
 
-	def copy_cell(self, alias_origin, alias_dest):
+	def copy_cell(self, alias_origin, range):
 		"""
 		Copy the the type of the cell and adapts to the destination cell
 		Args:
 			alias_origin (str): Alias of the cell to be copied
-			alias_dest (str): Alias of cell to be set
+			range (str): Alias of cell or cells to be set
 
-		Returns:
-			Cell: cell destinnation with coppied contents and adapted as the specifications
 
 		"""
-		pass
+
+		# Get cell origin information
+		position_origin = expression_parser.ExpressionParser.parse_alias(alias=alias_origin)
+		cell_origin, _ = self.get_cell(alias=alias_origin)
+
+		# Get expression origin tokens
+		tokens_origin = cell_origin.expression.tokens.items
+
+		# Convert range to list of alias
+		alias_list = expression_parser.ExpressionParser.from_range_to_list(range_=range, letter_list=self.columns_alias)
+
+		# Extract column and row of destination
+		position_dest = expression_parser.ExpressionParser.parse_alias(alias=alias_list[0])
+
+		# Get column index in alias information list
+		indx_col_origin = self.columns_alias.index(position_origin['col'])
+		indx_col_dest = self.columns_alias.index(position_dest['col'])
+
+		# Calculate differences between origin and destination
+		difference_col = indx_col_dest - indx_col_origin
+		difference_row = position_dest['row'] - position_origin['row']
+
+		for alias in alias_list:
+			tmp_expression = cell_origin.expression
+			for i, token in enumerate(tokens_origin):
+				indx_col_calc = 0
+				row_calc = 0
+				if token.tsubtype == 'range' and token.ttype == 'operand':
+					alias_obj = expression_parser.ExpressionParser.parse_alias(alias=token.tvalue)
+					indx_col_calc = self.columns_alias.index(alias_obj['col']) + difference_col
+					row_calc = alias_obj['row'] + difference_row
+					tmp_expression.tokens.items[i].tvalue = '{}{}'.format(self.columns_alias[indx_col_calc], row_calc)
+
+			new_string_expr = '={}'.format(tmp_expression.render())
+			tmp_expression = None
+			self.set(alias=alias, value=new_string_expr)
+
+
+
+
+
 
 

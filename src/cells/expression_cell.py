@@ -24,6 +24,12 @@ class ExpressionCell(Cell):
         self.string_expression = params['value']
         self.value = None
 
+    def get_expression_tokens(self):
+        return self.expression.tokens.items
+
+    def render_expression_tokens(self):
+        self.string_expression = '={}'.format(self.expression.render())
+
     def printify(self):
         print('=================GET CELL====================')
         print('CELL: {}'.format(self.alias))

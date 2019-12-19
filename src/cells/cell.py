@@ -12,5 +12,6 @@ class Cell(object):
 	def __init__(self, alias=None):
 		self.alias = alias
 
+
 cell = Cell
 
