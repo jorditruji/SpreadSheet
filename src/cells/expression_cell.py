@@ -1,5 +1,5 @@
 from .cell import Cell
-
+from src.expression_parser import TokenExpression
 
 class ExpressionCell(Cell):
     """
@@ -20,15 +20,9 @@ class ExpressionCell(Cell):
     def __init__(self, params):
         super().__init__(alias=params['alias'])
         self.type = 'expression'
-        self.expression = params['expression']
+        self.expression = TokenExpression(params['value'])
         self.string_expression = params['value']
         self.value = None
-
-    def get_expression_tokens(self):
-        return self.expression.tokens.items
-
-    def render_expression_tokens(self):
-        self.string_expression = '={}'.format(self.expression.render())
 
     def printify(self):
         print('=================GET CELL====================')

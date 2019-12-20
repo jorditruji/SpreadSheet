@@ -54,12 +54,9 @@ class ExpressionParser(object):
         # Expressions should start with =
         if value[0] == '=':
             type = 'ExpressionCell'
-            # Parse expression as expression tokens
-            formula_parser = ExcelParser()
-            formula_parser.parse(value)
-            return type, formula_parser
 
-        return type, None
+            return type
+        return type
 
     @classmethod
     def parse_alias(cls, alias):

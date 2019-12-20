@@ -66,7 +66,7 @@ class Menu:
 
     def set_cell_value(self):
         print('Set a cell value Selected')
-
+        #TODO: Considerar no ficar tantes compovacions aqui
         alias = input("Enter cell alias: ")
         try:
             # Check if cell exists
