@@ -124,13 +124,27 @@ class SpreadSheet:
 
 	def evaluate_expression(self, cell):
 		"""
-		Parses string cell expression and returns the value.
+		Evaluates the expression and returns a value
+
 		Args:
 			cell (ExpressionCell): cell to be evaluated
 
 		Returns:
 			float: value for expression
 		"""
+		# TODO: Evaluar una cela del tipus ExpressionCell.
+		# A ExpressionCell hi ha el objecte tipus token_expression (self.expression)
+		# self.expression.get_tokens() ens retorna els tokens en una llista ordenat. Mirar bé quina és la bona manera d'evaluar
+		# Crear corresponents excepcions
+		pass
+
+	def update(self):
+		"""
+		Updates every ExpressionCell value in spreadsheet by evaluating its expression
+		Returns:
+			boolean: Success
+		"""
+		# TODO: Funció que cridarem cada cop que s'insereixi una ExpressionCell nova o es modifiqui una existent.
 		pass
 
 	def copy_cell(self, alias_origin, range):
@@ -153,9 +167,11 @@ class SpreadSheet:
 			"value": cell_origin.expression.string_expression
 		}
 
-
-		# Convert range to list of alias
-		alias_list = expression_parser.ExpressionParser.from_range_to_list(range_=range, letter_list=self.columns_alias)
+		# Convert range (if its) to list of alias
+		if ":" in range:
+			alias_list = expression_parser.ExpressionParser.from_range_to_list(range_=range, letter_list=self.columns_alias)
+		else:
+			alias_list = [range]
 
 		for alias in alias_list:
 
@@ -177,13 +193,23 @@ class SpreadSheet:
 			# Change tokens with type operand and range
 			for i, token in enumerate(tmp_cell.expression.get_tokens()):
 				if token['tsubtype'] == 'range' and token['ttype'] == 'operand':
-					alias_obj = expression_parser.ExpressionParser.parse_alias(alias=token['tvalue'])
+					# Look if it's a range or single value
+					if ":" in token['tvalue']:
+						cells_to_change = token['tvalue'].split(':')
+					else:
+						cells_to_change = token['tvalue']
 
-					# Calculate new expression
-					indx_col_calc = self.columns_alias.index(alias_obj['col']) + difference_col
-					row_calc = alias_obj['row'] + difference_row
-					col_calc = self.columns_alias[indx_col_calc]
-					tmp_cell.expression.tokens.items[i].tvalue = "{}{}".format(col_calc, row_calc)
+					cells_changed = []
+					for cell_to_change in cells_to_change:
+						alias_obj = expression_parser.ExpressionParser.parse_alias(alias=cell_to_change)
+
+						# Calculate new expression
+						indx_col_calc = self.columns_alias.index(alias_obj['col']) + difference_col
+						row_calc = alias_obj['row'] + difference_row
+						col_calc = self.columns_alias[indx_col_calc]
+						cells_changed.append("{}{}".format(col_calc, row_calc))
+
+					tmp_cell.expression.tokens.items[i].tvalue = ":".join(map(str, cells_changed))
 
 			# Render new expression
 			new_string_expression = "={}".format(tmp_cell.expression.render())

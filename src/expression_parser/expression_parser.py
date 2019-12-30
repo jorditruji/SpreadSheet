@@ -54,8 +54,6 @@ class ExpressionParser(object):
         # Expressions should start with =
         if value[0] == '=':
             type = 'ExpressionCell'
-
-            return type
         return type
 
     @classmethod
@@ -93,6 +91,7 @@ class ExpressionParser(object):
             list: list of cell alias involved
         """
 
+        # TODO: Actualment només suporta rangs de la mateixa columna (A1:A6), afegir rangs de columna utilitzant letter_list que són els column_alias del spreadsheet. Ho farem mirant els index
         range_list = range_.split(':')
         min_range = cls.parse_alias(alias=range_list[0])
         max_range = cls.parse_alias(alias=range_list[1])

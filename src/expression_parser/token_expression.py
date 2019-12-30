@@ -11,6 +11,7 @@ class TokenExpression(ExcelParser):
         """
         super().__init__()
         self.string_expression = expression
+        # TODO: Mirar que fem amb el parser, Agafa ',' en ves de ';'. Hauriem de canviar codi de jsport_nonEAT
         self.parse(formula=expression)
 
     def get_tokens(self):
