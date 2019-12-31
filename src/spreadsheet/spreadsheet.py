@@ -197,7 +197,7 @@ class SpreadSheet:
 					if ":" in token['tvalue']:
 						cells_to_change = token['tvalue'].split(':')
 					else:
-						cells_to_change = token['tvalue']
+						cells_to_change = [token['tvalue']]
 
 					cells_changed = []
 					for cell_to_change in cells_to_change:
