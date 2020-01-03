@@ -18,3 +18,5 @@ class PathNotFound(Exception):
     """Raised when a path does not exist"""
     def __init__(self, path):
         self.custom_message = '{} does not exist'.format(path)
+
+

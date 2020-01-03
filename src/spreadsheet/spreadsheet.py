@@ -49,6 +49,13 @@ class SpreadSheet:
 		}
 		# Expression cells should be created once they are parsed
 		if type == 'ExpressionCell':
+			# Check for ranges:
+			ranges = expression_parser.ExpressionParser.find_ranges(value)
+			print(ranges)
+			for _range in ranges:
+				new_str = expression_parser.ExpressionParser.from_range_to_str(_range)
+				# Replace A1:A3 for A1,A2, A3
+				value = value.replace(_range, new_str)
 			params['expression'] = self.parser.parse(value[1:])# = char is messing the parser
 
 			cell = self.cell_factory.create_cell(type=type, params=params)

@@ -1,5 +1,7 @@
 from src.operations import MEAN, MAX, MIN, SUM
 from . import ExcelParser
+import re
+
 
 class ExpressionParser(object):
     """
@@ -104,4 +106,37 @@ class ExpressionParser(object):
             alias_list.append('{}{}'.format(min_range['col'], i))
 
         return alias_list
+
+
+    @classmethod
+    def from_range_to_str(cls, range_):
+        """
+        Converts range (A1:A6) to list of alias
+        Args:
+            range_ (str): Range of cells
+            letter_list (list): Liat of possible column alias
+
+        Returns:
+            list: list of cell alias involved
+        """
+
+        # TODO: Actualment només suporta rangs de la mateixa columna (A1:A6), afegir rangs de columna utilitzant letter_list que són els column_alias del spreadsheet. Ho farem mirant els index
+        range_list = range_.split(':')
+        min_range = cls.parse_alias(alias=range_list[0])
+        max_range = cls.parse_alias(alias=range_list[1])
+
+        alias_list = []
+        init = int(min_range['row'])
+        fin = int(max_range['row']) + 1
+        list_rows = range(init, fin)
+        for i in list_rows:
+            alias_list.append('{}{}'.format(min_range['col'], i))
+
+        return ','.join(alias_list)
+    @classmethod
+    def find_ranges(cls, expression):
+        #Match for LettersNumber:LettersNumber
+        pattern = '[a-zA-Z]+\\d+:[a-zA-Z]+\\d+'# Find the pattern of ranges.
+        return re.findall(pattern, expression)
+
 

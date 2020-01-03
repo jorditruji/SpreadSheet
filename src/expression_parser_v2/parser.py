@@ -356,8 +356,8 @@ class Parser:
             "<=": self.lessThanEqual,
             "and": self.andOperator,
             "or": self.orOperator,
-            "D": self.roll,
-            ':': self.from_range_to_list
+            "D": self.roll
+            #':': self.from_range_to_list
         }
 
         self.functions = {
@@ -403,51 +403,7 @@ class Parser:
             'E': math.e,
             'PI': math.pi
         }
-    def from_range_to_list(self, cell1, cell2):
-        """
-        Converts range (A1:A6) to list of alias
-        Args:
-            range_ (str): Range of cells
-            letter_list (list): Liat of possible column alias
 
-        Returns:
-            list: list of cell alias involved
-        """
-
-        # TODO: Actualment només suporta rangs de la mateixa columna (A1:A6), afegir rangs de columna utilitzant letter_list que són els column_alias del spreadsheet. Ho farem mirant els index
-        min_range = self.parse_alias(alias=cell1)
-        max_range = self.parse_alias(alias=cell2)
-
-        alias_list = []
-        init = int(min_range['row'])
-        fin = int(max_range['row']) + 1
-        list_rows = range(init, fin)
-        for i in list_rows:
-            alias_list.append('{}{}'.format(min_range['col'], i))
-
-        return ','.join(alias_list)
-
-    def parse_alias(self, alias):
-        """
-        Parses cell alias
-        Args:
-            alias (str): Cell alias
-
-        Returns:
-            dict: col, row
-        """
-        col = ''
-        row = ''
-        for c in alias:
-            if c.isdigit():
-                row += c
-            else:
-                col += c
-
-        return {
-            "col": col,
-            "row": int(row)
-        }
 
     def parse(self, expr):
         self.errormsg = ''
@@ -724,6 +680,7 @@ class Parser:
             ('>', 1, '>'),
             ('and ', 0, 'and'),
             ('or ', 0, 'or'),
+            (':', 10, ':')
         )
         for token, priority, index in ops:
             if self.expression.startswith(token, self.pos):
