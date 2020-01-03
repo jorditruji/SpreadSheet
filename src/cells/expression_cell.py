@@ -30,10 +30,16 @@ class ExpressionCell(Cell):
         print('TYPE: {}'.format(self.type.upper()))
         print('VALUE: {}'.format(self.value))
         print('EXPRESSION: {}'.format(self.string_expression))
-        printer = self.expression.prettyprint()
-        print(printer)
+        #printer = self.expression.prettyprint()
+        #print(printer)
         print(vars(self))
         print('\n')
+
+    def update_value(self,value_dict):
+        try:
+            self.value = self.expression.evaluate(value_dict)
+        except Exception as e:
+            raise e
 
 
 

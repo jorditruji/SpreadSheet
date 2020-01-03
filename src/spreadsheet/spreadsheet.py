@@ -54,6 +54,11 @@ class SpreadSheet:
 		print(params.keys())
 
 		cell = self.cell_factory.create_cell(type=type, params=params)
+		involved_cells_alias = cell.expression.variables()
+		value_dict = {}
+		for alias in involved_cells_alias:
+			value_dict[alias] = self.get_cell(alias)[0].value
+		cell.update_value(value_dict)
 		self.cells.append(cell)
 
 	def get_cell(self, alias):
