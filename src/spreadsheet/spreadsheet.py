@@ -48,17 +48,17 @@ class SpreadSheet:
 			"value": value
 		}
 		# Expression cells should be created once they are parsed
-		print(type)
 		if type == 'ExpressionCell':
 			params['expression'] = self.parser.parse(value[1:])# = char is messing the parser
-		print(params.keys())
 
-		cell = self.cell_factory.create_cell(type=type, params=params)
-		involved_cells_alias = cell.expression.variables()
-		value_dict = {}
-		for alias in involved_cells_alias:
-			value_dict[alias] = self.get_cell(alias)[0].value
-		cell.update_value(value_dict)
+			cell = self.cell_factory.create_cell(type=type, params=params)
+			involved_cells_alias = cell.expression.variables()
+			value_dict = {}
+			for alias in involved_cells_alias:
+				value_dict[alias] = self.get_cell(alias)[0].value
+			cell.update_value(value_dict)
+		else: 
+			cell = self.cell_factory.create_cell(type=type, params=params)
 		self.cells.append(cell)
 
 	def get_cell(self, alias):

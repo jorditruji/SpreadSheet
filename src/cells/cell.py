@@ -12,6 +12,12 @@ class Cell(object):
 	def __init__(self, alias=None):
 		self.alias = alias
 
+	def update_value(self, value):
+		self.value = value
+
+	def get_value(self):
+		return self.value
+
 
 cell = Cell
 
