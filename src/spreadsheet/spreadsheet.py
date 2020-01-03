@@ -163,8 +163,13 @@ class SpreadSheet:
 		# Updating cells without changing its type
 		if new_type == cell_2_update.type:
 			if new_type == 'expression':
-				#TODO: ACTUALITZAR STR_EXPRESSION I VALOR
-				pint("WORK IN PROCESS")
+				cell_2_update.expression = self.parser.parse(value[1:])
+				involved_cells_alias = cell_2_update.expression.variables()
+				value_dict = {}
+				for alias in involved_cells_alias:
+					value_dict[alias] = self.get_cell(alias)[0].value
+				cell.update_value(value_dict)				
+
 			else:
 				cell_2_update.value = value
 		else:
