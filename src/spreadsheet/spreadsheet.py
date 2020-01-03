@@ -5,6 +5,7 @@ from src.exceptions import AliasNotFound, CellNotFound, PathNotFound
 import pickle
 import os.path
 from os import path
+from src.expression_parser_v2.parser import Parser
 
 
 class SpreadSheet:
@@ -22,6 +23,7 @@ class SpreadSheet:
 		self.cell_factory = CellFactory()
 		self.cells = []
 		self.max_rows = 100
+		self.parser = Parser()
 
 	def set(self, alias, value):
 		"""
@@ -40,12 +42,18 @@ class SpreadSheet:
 			raise AliasNotFound(row=position['row'])
 
 		# Parse value
-		type = expression_parser.ExpressionParser.parse_value_cell(value=value)
+		type = expression_parser.ExpressionParser.infer_cell_type(value=value)
 		params = {
 			"alias": alias,
 			"value": value
 		}
-		cell = self.cell_factory.create_cell(typ=type, params=params)
+		# Expression cells should be created once they are parsed
+		print(type)
+		if type == 'ExpressionCell':
+			params['expression'] = self.parser.parse(value[1:])# = char is messing the parser
+		print(params.keys())
+
+		cell = self.cell_factory.create_cell(type=type, params=params)
 		self.cells.append(cell)
 
 	def get_cell(self, alias):
@@ -138,14 +146,27 @@ class SpreadSheet:
 		# Crear corresponents excepcions
 		pass
 
-	def update(self):
+	def update_cell(self, alias, value):
 		"""
-		Updates every ExpressionCell value in spreadsheet by evaluating its expression
+		Updates every a concrete cell
 		Returns:
 			boolean: Success
 		"""
-		# TODO: Funció que cridarem cada cop que s'insereixi una ExpressionCell nova o es modifiqui una existent.
-		pass
+		
+		cell_2_update, idx = self.get_cell(alias)
+		new_type = expression_parser.ExpressionParser.infer_cell_type(value=value)
+		# Updating cells without changing its type
+		if new_type == cell_2_update.type:
+			if new_type == 'expression':
+				#TODO: ACTUALITZAR STR_EXPRESSION I VALOR
+				pint("WORK IN PROCESS")
+			else:
+				cell_2_update.value = value
+		else:
+			# If the type is different we just recreate the cell
+			self.remove_cell(alias)
+			self.set(alias, value)
+
 
 	def copy_cell(self, alias_origin, range):
 		"""
@@ -187,7 +208,7 @@ class SpreadSheet:
 			difference_row = position_dest['row'] - position_origin['row']
 
 			# Create temporal cell to handle new wxpression
-			tmp_cell = self.cell_factory.create_cell(typ='ExpressionCell', params=params)
+			tmp_cell = self.cell_factory.create_cell(type='ExpressionCell', params=params)
 			tmp_cell.expression.parse(tmp_cell.expression.string_expression)
 
 			# Change tokens with type operand and range

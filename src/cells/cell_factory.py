@@ -6,5 +6,5 @@ from .text_cell import TextCell
 class CellFactory:
 
     @staticmethod
-    def create_cell(typ, params):
-        return globals()[typ](params)
+    def create_cell(type, params):
+        return globals()[type](params)

@@ -1,6 +1,8 @@
 import sys
-from src.spreadsheet import SpreadSheet
+import os
+sys.path.append(os.getcwd()[:os.getcwd().index('src')])
 
+from src.spreadsheet import SpreadSheet
 
 class Menu:
     """
@@ -78,9 +80,7 @@ class Menu:
             if replace == 'y':
                 value = input("Enter a value or expression: ")
 
-                # First remove the cell, then set it
-                self.spreadsheet.remove_cell(alias=alias)
-                self.spreadsheet.set(alias=alias, value=value)
+                self.spreadsheet.update_cell(alias=alias, value=value)
         except Exception as e:
             print(e.custom_message)
             # Cell don't exist, it can be created
@@ -103,7 +103,7 @@ class Menu:
         self.spreadsheet.copy_cell(alias_origin=alias_origin, range=range)
 
     def quit(self):
-        print("Bye Nerd!")
+        print("Bye!")
         sys.exit(0)
 
 

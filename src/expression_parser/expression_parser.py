@@ -37,14 +37,14 @@ class ExpressionParser(object):
 
 
     @classmethod
-    def parse_value_cell(cls, value):
+    def infer_cell_type(cls, value):
         """
         Parses input value
         Args:
             value (str): String or numeric value
 
         Returns:
-            tupple: (type of cell, expression if applies).
+            type of cell
         """
 
         type = 'TextCell'

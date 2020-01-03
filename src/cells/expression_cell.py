@@ -20,7 +20,7 @@ class ExpressionCell(Cell):
     def __init__(self, params):
         super().__init__(alias=params['alias'])
         self.type = 'expression'
-        self.expression = TokenExpression(params['value'])
+        self.expression = params['expression']
         self.string_expression = params['value']
         self.value = None
 
@@ -32,6 +32,7 @@ class ExpressionCell(Cell):
         print('EXPRESSION: {}'.format(self.string_expression))
         printer = self.expression.prettyprint()
         print(printer)
+        print(vars(self))
         print('\n')
 
 
