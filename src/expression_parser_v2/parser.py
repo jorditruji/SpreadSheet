@@ -15,6 +15,7 @@ from __future__ import division
 import math
 import random
 import re
+import numpy as np
 
 TNUMBER = 0
 TOP1 = 1
@@ -248,6 +249,13 @@ class Parser:
             result=u'{0}{1}'.format(result, arg)
         return result
 
+    def mean(self, a, b, *args):
+        result = a+b
+        for arg in args:
+            result+=arg
+        result = result/(2+len(args))
+        return result
+
     def equal (self, a, b ):
         return a == b
 
@@ -348,7 +356,8 @@ class Parser:
             "<=": self.lessThanEqual,
             "and": self.andOperator,
             "or": self.orOperator,
-            "D": self.roll
+            "D": self.roll,
+            ':': self.from_range_to_list
         }
 
         self.functions = {
@@ -357,6 +366,7 @@ class Parser:
             'log': math.log,
             'min': min,
             'max': max,
+            'average': self.mean,
             'pyt': self.pyt,
             'pow': math.pow,
             'atan2': math.atan2,
@@ -392,6 +402,51 @@ class Parser:
             'atan2': math.atan2,
             'E': math.e,
             'PI': math.pi
+        }
+    def from_range_to_list(self, cell1, cell2):
+        """
+        Converts range (A1:A6) to list of alias
+        Args:
+            range_ (str): Range of cells
+            letter_list (list): Liat of possible column alias
+
+        Returns:
+            list: list of cell alias involved
+        """
+
+        # TODO: Actualment només suporta rangs de la mateixa columna (A1:A6), afegir rangs de columna utilitzant letter_list que són els column_alias del spreadsheet. Ho farem mirant els index
+        min_range = self.parse_alias(alias=cell1)
+        max_range = self.parse_alias(alias=cell2)
+
+        alias_list = []
+        init = int(min_range['row'])
+        fin = int(max_range['row']) + 1
+        list_rows = range(init, fin)
+        for i in list_rows:
+            alias_list.append('{}{}'.format(min_range['col'], i))
+
+        return ','.join(alias_list)
+
+    def parse_alias(self, alias):
+        """
+        Parses cell alias
+        Args:
+            alias (str): Cell alias
+
+        Returns:
+            dict: col, row
+        """
+        col = ''
+        row = ''
+        for c in alias:
+            if c.isdigit():
+                row += c
+            else:
+                col += c
+
+        return {
+            "col": col,
+            "row": int(row)
         }
 
     def parse(self, expr):
@@ -470,7 +525,9 @@ class Parser:
                 tokenstack.append(consttoken)
                 expected = self.OPERATOR | self.RPAREN | self.COMMA
             elif self.isOp2():
+                print("Is op2!")
                 if (expected & self.FUNCTION) == 0:
+                    print("expected and inside function")
                     self.error_parsing(self.pos, 'unexpected function')
                 self.addfunc(tokenstack, operstack, TOP2)
                 noperators += 2
@@ -743,6 +800,7 @@ class Parser:
                 if i == self.pos or (c != '_' and (c < '0' or c > '9')):
                     break
             str += c
+        print("String: {}".format(str))
         if len(str) > 0 and (str in self.ops2):
             self.tokenindex = str
             self.tokenprio = 7
