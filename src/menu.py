@@ -85,7 +85,11 @@ class Menu:
             print(e.custom_message)
             # Cell don't exist, it can be created
             value = input("Enter a value or expression: ")
-            self.spreadsheet.set(alias=alias, value=value)
+            try:
+                self.spreadsheet.set(alias=alias, value=value)
+            except Exception as e:
+                print(e)
+                print("Failed to evaluate cell. It depends on other cells which have no value")
 
     def get_cell_value(self):
         print('Get a cell value')

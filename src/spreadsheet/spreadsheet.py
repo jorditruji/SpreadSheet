@@ -59,10 +59,12 @@ class SpreadSheet:
 			params['expression'] = self.parser.parse(value[1:])# = char is messing the parser
 
 			cell = self.cell_factory.create_cell(type=type, params=params)
+			# Once we have created the cell ww will evaluate its expression and update its value
 			involved_cells_alias = cell.expression.variables()
 			value_dict = {}
 			for alias in involved_cells_alias:
-				value_dict[alias] = self.get_cell(alias)[0].value
+					value_dict[alias] = self.get_cell(alias)[0].get_value()
+
 			cell.update_value(value_dict)
 		else: 
 			cell = self.cell_factory.create_cell(type=type, params=params)
@@ -142,21 +144,7 @@ class SpreadSheet:
 		# limit to n_cols
 		return letters
 
-	def evaluate_expression(self, cell):
-		"""
-		Evaluates the expression and returns a value
 
-		Args:
-			cell (ExpressionCell): cell to be evaluated
-
-		Returns:
-			float: value for expression
-		"""
-		# TODO: Evaluar una cela del tipus ExpressionCell.
-		# A ExpressionCell hi ha el objecte tipus token_expression (self.expression)
-		# self.expression.get_tokens() ens retorna els tokens en una llista ordenat. Mirar bé quina és la bona manera d'evaluar
-		# Crear corresponents excepcions
-		pass
 
 	def update_cell(self, alias, value):
 		"""
@@ -169,6 +157,7 @@ class SpreadSheet:
 		new_type = expression_parser.ExpressionParser.infer_cell_type(value=value)
 		# Updating cells without changing its type
 		if new_type == cell_2_update.type:
+
 			if new_type == 'expression':
 				cell_2_update.expression = self.parser.parse(value[1:])
 				involved_cells_alias = cell_2_update.expression.variables()
@@ -178,7 +167,7 @@ class SpreadSheet:
 				cell.update_value(value_dict)				
 
 			else:
-				cell_2_update.value = value
+				cell_2_update.update_value(value)
 		else:
 			# If the type is different we just recreate the cell
 			self.remove_cell(alias)
