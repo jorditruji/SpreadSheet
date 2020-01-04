@@ -139,4 +139,10 @@ class ExpressionParser(object):
         pattern = '[a-zA-Z]+\\d+:[a-zA-Z]+\\d+'# Find the pattern of ranges.
         return re.findall(pattern, expression)
 
+    @classmethod
+    def find_cells(cls, expression):
+        # Match for LettersNumber:LettersNumber
+        pattern = '[a-zA-Z]+\\d+'  # Find the pattern of ranges.
+        return re.findall(pattern, expression)
+
 

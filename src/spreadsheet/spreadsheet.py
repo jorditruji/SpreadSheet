@@ -173,7 +173,6 @@ class SpreadSheet:
 			self.remove_cell(alias)
 			self.set(alias, value)
 
-
 	def copy_cell(self, alias_origin, range):
 		"""
 		Copy the the type of the cell and adapts to the destination cell
@@ -188,11 +187,7 @@ class SpreadSheet:
 		position_origin = expression_parser.ExpressionParser.parse_alias(alias=alias_origin)
 		cell_origin, _ = self.get_cell(alias=alias_origin)
 
-		# Get expression origin tokens
-		params = {
-			"alias": cell_origin.alias,
-			"value": cell_origin.expression.string_expression
-		}
+		involved_cells_origin = expression_parser.ExpressionParser.find_cells(cell_origin.string_expression)
 
 		# Convert range (if its) to list of alias
 		if ":" in range:
@@ -213,34 +208,42 @@ class SpreadSheet:
 			difference_col = indx_col_dest - indx_col_origin
 			difference_row = position_dest['row'] - position_origin['row']
 
-			# Create temporal cell to handle new wxpression
-			tmp_cell = self.cell_factory.create_cell(type='ExpressionCell', params=params)
-			tmp_cell.expression.parse(tmp_cell.expression.string_expression)
+			string_expression = cell_origin.string_expression
+			expression_parts = []
 
-			# Change tokens with type operand and range
-			for i, token in enumerate(tmp_cell.expression.get_tokens()):
-				if token['tsubtype'] == 'range' and token['ttype'] == 'operand':
-					# Look if it's a range or single value
-					if ":" in token['tvalue']:
-						cells_to_change = token['tvalue'].split(':')
-					else:
-						cells_to_change = [token['tvalue']]
+			for i, cell in enumerate(involved_cells_origin):
 
-					cells_changed = []
-					for cell_to_change in cells_to_change:
-						alias_obj = expression_parser.ExpressionParser.parse_alias(alias=cell_to_change)
+				# For each involved cell alias, parse position and calculate new alias
+				tmp_position = expression_parser.ExpressionParser.parse_alias(alias=cell)
+				new_col_indx = int(self.columns_alias.index(tmp_position['col'])) + difference_col
+				new_row = tmp_position['row'] + difference_row
+				new_col = self.columns_alias[new_col_indx]
 
-						# Calculate new expression
-						indx_col_calc = self.columns_alias.index(alias_obj['col']) + difference_col
-						row_calc = alias_obj['row'] + difference_row
-						col_calc = self.columns_alias[indx_col_calc]
-						cells_changed.append("{}{}".format(col_calc, row_calc))
+				# New alias to be set in the string expression
+				new_alias = "{}{}".format(new_col, new_row)
 
-					tmp_cell.expression.tokens.items[i].tvalue = ":".join(map(str, cells_changed))
+				# Replace first alias found in string expression
+				string_expression = string_expression.replace(cell, new_alias, 1)
 
-			# Render new expression
-			new_string_expression = "={}".format(tmp_cell.expression.render())
-			self.set(alias=alias, value=new_string_expression)
+				# Find finishing index for character treated, store it to rejoin later
+				index = string_expression.index(new_alias) + len(new_alias)
+				expression_parts.append(string_expression[:index])
+
+				# Cut the changing string expression to not substitute replaced values.
+				# Everything is done in same order
+				string_expression = string_expression[index:]
+
+			# Append residual parts of string expression.
+			expression_parts.append(string_expression)
+			new_string_expression = ''.join(expression_parts)
+			try:
+				self.set(alias=alias, value=new_string_expression)
+			except Exception as e:
+				print(e.custom_message)
+
+
+
+
 
 
 
