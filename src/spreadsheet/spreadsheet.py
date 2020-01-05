@@ -1,7 +1,7 @@
 import string
 from src.cells import CellFactory
 from src.expression_parser import expression_parser
-from src.exceptions import AliasNotFound, CellNotFound, PathNotFound
+from src.exceptions import AliasNotFound, CellNotFound, PathNotFound, CopyAlias
 import pickle
 import os.path
 from os import path
@@ -47,6 +47,12 @@ class SpreadSheet:
 			"alias": alias,
 			"value": value
 		}
+
+		# Patch to evaluate propperly absolute values
+		# It doesn't matter when evaluating if its an absolute or not column or row.
+		# It just makes sense in copy_cells
+		value = value.replace('$', '')
+
 		# Expression cells should be created once they are parsed
 		if type == 'ExpressionCell':
 			# Check for ranges:
@@ -56,6 +62,7 @@ class SpreadSheet:
 				new_str = expression_parser.ExpressionParser.from_range_to_str(_range)
 				# Replace A1:A3 for A1,A2, A3
 				value = value.replace(_range, new_str)
+
 			params['expression'] = self.parser.parse(value[1:])# = char is messing the parser
 
 			cell = self.cell_factory.create_cell(type=type, params=params)
@@ -213,14 +220,41 @@ class SpreadSheet:
 
 			for i, cell in enumerate(involved_cells_origin):
 
-				# For each involved cell alias, parse position and calculate new alias
-				tmp_position = expression_parser.ExpressionParser.parse_alias(alias=cell)
-				new_col_indx = int(self.columns_alias.index(tmp_position['col'])) + difference_col
-				new_row = tmp_position['row'] + difference_row
-				new_col = self.columns_alias[new_col_indx]
+				absolutes = cell.count('$')
+				if absolutes == 0:
+					# For each involved cell alias, parse position and calculate new alias
+					tmp_position = expression_parser.ExpressionParser.parse_alias(alias=cell)
+					new_col_indx = int(self.columns_alias.index(tmp_position['col'])) + difference_col
+					new_row = tmp_position['row'] + difference_row
+					new_col = self.columns_alias[new_col_indx]
 
-				# New alias to be set in the string expression
-				new_alias = "{}{}".format(new_col, new_row)
+					# New alias to be set in the string expression
+					new_alias = "{}{}".format(new_col, new_row)
+
+					if new_row <= 0 or new_col_indx < 0:
+						raise CopyAlias(alias_origin=cell, alias_dest=new_alias)
+
+				elif absolutes == 1:
+					index_abs = cell.index('$')
+					aux_cell = cell.replace('$', '')
+					tmp_position = expression_parser.ExpressionParser.parse_alias(alias=aux_cell)
+					if index_abs == 0:
+						new_col = "${}".format(tmp_position['col'])
+						new_row = tmp_position['row'] + difference_row
+					else:
+						new_col_indx = int(self.columns_alias.index(tmp_position['col'])) + difference_col
+						new_row = "${}".format(tmp_position['row'])
+						new_col = self.columns_alias[new_col_indx]
+
+					# New alias to be set in the string expression
+					new_alias = "{}{}".format(new_col, new_row)
+
+					if new_row <= 0 or new_col_indx < 0:
+						raise CopyAlias(alias_origin=cell, alias_dest=new_alias)
+
+				elif absolutes == 2:
+					new_alias = cell
+
 
 				# Replace first alias found in string expression
 				string_expression = string_expression.replace(cell, new_alias, 1)

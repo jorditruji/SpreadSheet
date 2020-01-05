@@ -14,15 +14,15 @@ list_sets = [
     {"alias": "B2", "value": '5'},
     {"alias": "B4", "value": '20'},
     {"alias": "A4", "value": '15'},
-    {"alias": "A3", "value": "=average(A1:A2,A4)"}
+    {"alias": "A3", "value": "=average(A1:A2,$A$4)"}
 ]
 
 for set in list_sets:
     spreadsheet.set(alias=set['alias'], value=set['value'])
 
-spreadsheet.copy_cell(alias_origin='A3', range='B3')
-cell, _ = spreadsheet.get_cell(alias='B3')
-if cell.value == 10.0:
+try:
+    spreadsheet.copy_cell(alias_origin='A3', range='B3')
+    cell, _ = spreadsheet.get_cell(alias='B3')
     cell.printify()
-else:
-    print('ERROR')
+except Exception as e:
+    print(e.custom_message)

@@ -1,1 +1,1 @@
-from .exceptions import AliasNotFound, CellNotFound, PathNotFound
+from .exceptions import AliasNotFound, CellNotFound, PathNotFound, CopyAlias

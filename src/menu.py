@@ -104,7 +104,10 @@ class Menu:
         print('Copy cell content')
         alias_origin = input('Enter cell to be coppied: ')
         range = input("Enter cell or range of cells: ")
-        self.spreadsheet.copy_cell(alias_origin=alias_origin, range=range)
+        try:
+            self.spreadsheet.copy_cell(alias_origin=alias_origin, range=range)
+        except Exception as e:
+            print(e.custom_message)
 
     def quit(self):
         print("Bye!")
