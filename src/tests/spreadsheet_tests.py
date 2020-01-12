@@ -99,11 +99,17 @@ class TestSpreadsheet(unittest.TestCase):
         self.assertEqual(cell.value, result, 'Value is not correct')
 
     def test(self):
-        self.set_values()
-        self.copy_cell()
-        self.copy_cells()
-        self.operation(alias='A3', value='=A1+A2', result=21.0, operation_name='Sum Operand')
-        self.operation(alias='A3', value='=SUM(A1:A2)', result=21.0, operation_name='Sum Function')
+        try:
+            self.set_values()
+            self.copy_cell()
+            self.copy_cells()
+            self.operation(alias='A3', value='=A1+A2', result=21.0, operation_name='A1 + A2')
+            self.operation(alias='A4', value='=A1*A2', result=110.0, operation_name='A1 * A2')
+            self.operation(alias='A5', value='=A2/A1', result=1.1, operation_name='A2 / A1')
+            self.operation(alias='A6', value='=mean(A1:A2)', result=10.5, operation_name='mean(A1:A2)')
+            self.operation(alias='A7', value='=SUM(A1:A2)', result=21.0, operation_name='SUM(A1:A2)')
+        except Exception as e:
+            logger.error(e.custom_message)
 
 
 if __name__ == '__main__':
