@@ -100,7 +100,7 @@ class Utils(object):
         init_row = int(min_range['row'])
         fin_row = int(max_range['row']) + 1
         init_col = letter_list.index(min_range['col'])
-        fin_col = letter_list.index(min_range['col']) + 1
+        fin_col = letter_list.index(max_range['col']) + 1
         list_rows = range(init_row, fin_row)
         list_cols = range(init_col, fin_col)
         for col in list_cols:
