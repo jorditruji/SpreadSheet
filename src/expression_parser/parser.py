@@ -757,7 +757,7 @@ class Parser:
                 if i == self.pos or (c != '_' and (c < '0' or c > '9')):
                     break
             str += c
-        print("String: {}".format(str))
+        #print("String: {}".format(str))
         if len(str) > 0 and (str in self.ops2):
             self.tokenindex = str
             self.tokenprio = 7

@@ -1,11 +1,10 @@
 import string
 from src.cells import CellFactory
-from src.expression_parser import expression_parser
+from src.utils.utils import utils
 from src.exceptions import AliasNotFound, CellNotFound, PathNotFound, CopyAlias
 import pickle
-import os.path
 from os import path
-from src.expression_parser_v2.parser import Parser
+from src.expression_parser.parser import Parser
 
 
 class SpreadSheet:
@@ -35,14 +34,14 @@ class SpreadSheet:
 
 		"""
 		# Parse alias
-		position = expression_parser.ExpressionParser.parse_alias(alias=alias)
+		position = utils.parse_alias(alias=alias)
 		if position['col'] not in self.columns_alias:
 			raise AliasNotFound(col=position['col'])
 		if position['row'] > self.max_rows:
 			raise AliasNotFound(row=position['row'])
 
 		# Parse value
-		type = expression_parser.ExpressionParser.infer_cell_type(value=value)
+		type = utils.infer_cell_type(value=value)
 		params = {
 			"alias": alias,
 			"value": value
@@ -56,10 +55,9 @@ class SpreadSheet:
 		# Expression cells should be created once they are parsed
 		if type == 'ExpressionCell':
 			# Check for ranges:
-			ranges = expression_parser.ExpressionParser.find_ranges(value)
-			print(ranges)
+			ranges = utils.find_ranges(value)
 			for _range in ranges:
-				new_str = expression_parser.ExpressionParser.from_range_to_str(_range)
+				new_str = utils.from_range_to_str(_range, self.columns_alias)
 				# Replace A1:A3 for A1,A2, A3
 				value = value.replace(_range, new_str)
 
@@ -151,8 +149,6 @@ class SpreadSheet:
 		# limit to n_cols
 		return letters
 
-
-
 	def update_cell(self, alias, value):
 		"""
 		Updates every a concrete cell
@@ -161,7 +157,7 @@ class SpreadSheet:
 		"""
 		
 		cell_2_update, idx = self.get_cell(alias)
-		new_type = expression_parser.ExpressionParser.infer_cell_type(value=value)
+		new_type = utils.infer_cell_type(value=value)
 		# Updating cells without changing its type
 		if new_type == cell_2_update.type:
 
@@ -191,21 +187,21 @@ class SpreadSheet:
 		"""
 		# TODO: Handle Exceptions!!!!!!!!
 		# Get cell origin information
-		position_origin = expression_parser.ExpressionParser.parse_alias(alias=alias_origin)
+		position_origin = utils.parse_alias(alias=alias_origin)
 		cell_origin, _ = self.get_cell(alias=alias_origin)
 
-		involved_cells_origin = expression_parser.ExpressionParser.find_cells(cell_origin.string_expression)
+		involved_cells_origin = utils.find_cells(cell_origin.string_expression)
 
 		# Convert range (if its) to list of alias
 		if ":" in range:
-			alias_list = expression_parser.ExpressionParser.from_range_to_list(range_=range, letter_list=self.columns_alias)
+			alias_list = utils.from_range_to_list(range_=range, letter_list=self.columns_alias)
 		else:
 			alias_list = [range]
 
 		for alias in alias_list:
 
 			# Extract column and row of destination
-			position_dest = expression_parser.ExpressionParser.parse_alias(alias=alias)
+			position_dest = utils.parse_alias(alias=alias)
 
 			# Get column index in alias information list
 			indx_col_origin = self.columns_alias.index(position_origin['col'])
@@ -223,7 +219,7 @@ class SpreadSheet:
 				absolutes = cell.count('$')
 				if absolutes == 0:
 					# For each involved cell alias, parse position and calculate new alias
-					tmp_position = expression_parser.ExpressionParser.parse_alias(alias=cell)
+					tmp_position = utils.parse_alias(alias=cell)
 					new_col_indx = int(self.columns_alias.index(tmp_position['col'])) + difference_col
 					new_row = tmp_position['row'] + difference_row
 					new_col = self.columns_alias[new_col_indx]
@@ -237,7 +233,7 @@ class SpreadSheet:
 				elif absolutes == 1:
 					index_abs = cell.index('$')
 					aux_cell = cell.replace('$', '')
-					tmp_position = expression_parser.ExpressionParser.parse_alias(alias=aux_cell)
+					tmp_position = utils.parse_alias(alias=aux_cell)
 					if index_abs == 0:
 						new_col = "${}".format(tmp_position['col'])
 						new_row = tmp_position['row'] + difference_row
