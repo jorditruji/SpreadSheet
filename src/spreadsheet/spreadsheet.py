@@ -125,33 +125,36 @@ class SpreadSheet:
 		i =0
 
 		with open('{}{}.txt'.format(path_, name), 'w') as output:
-			for row in range(max_row):
+			for row in range(1, max_row+1):
 				for letter in complete_letters:
-					col_row = utils.parse_alias(alias=ordered_cells[i].alias)
-					if col_row['col'] == letter and col_row['row'] == row+1:
-						if ordered_cells[i].type is 'expression':
-							text_output = text_output + str(ordered_cells[i].string_expression)
-						elif ordered_cells[i].type is 'numeric':
-							text_output = text_output + str(int(ordered_cells[i].value))
+					if i < len(ordered_cells):
+						col_row = utils.parse_alias(alias=ordered_cells[i].alias)
+						if col_row['col'] == letter and col_row['row'] == row:
+							if ordered_cells[i].type is 'expression':
+								text_output = text_output + str(ordered_cells[i].string_expression)
+							elif ordered_cells[i].type is 'numeric':
+								text_output = text_output + str(int(ordered_cells[i].value))
+							else:
+								text_output = text_output + str(ordered_cells[i].value)
+							i = i+1
 						else:
-							text_output = text_output + str(ordered_cells[i].value)
-						i = i+1
+							text_output = text_output+''
 					else:
-						text_output = text_output+''
-					
+						text_output = text_output + ''
+
 					if letter != complete_letters[-1]:
-						text_output = text_output + ';'	
-				text_output = text_output + '\n' 
+						text_output = text_output + ';'
+				text_output = text_output + '\n'
 			output.write(text_output)
 
-	def load(self, name):
+	def load(self, name, path_ = 'resources/'):
 		"""
 		Load Spreadsheet class
 		Args:
 			name: Name of the file
 
 		"""
-		path_ = 'resources/'
+
 		directory = '{}{}.txt'.format(path_, name)
 		if path.exists(directory) is False:
 			raise PathNotFound(directory)

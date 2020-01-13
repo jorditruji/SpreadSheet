@@ -59,6 +59,15 @@ class TestSpreadsheet(unittest.TestCase):
 
         logger.success('ok!')
 
+    def save_load(self, name):
+        logger.info('Test saving spreadsheet...')
+        self.spreadsheet.save(name=name, path_='../resources/')
+        logger.debug('Loading saved spreadsheet')
+        loaded_spreadsheet = self.spreadsheet.load(name=name, path_='../resources/')
+
+        self.assertEqual(self.spreadsheet, loaded_spreadsheet, 'Spreadsheets are not equal.')
+        logger.success('ok!')
+
     def test(self):
         try:
             # Test set cell of every type
@@ -85,7 +94,9 @@ class TestSpreadsheet(unittest.TestCase):
             self.set_value(alias='A7', value='=SUM(A1:A2)', result=21.0)
             self.set_value(alias='A8', value='=sum($A$1:A2, SUM($B$1:$B$2))', result=34.0)
 
-            self.copy_cell(alias_origin='A8', alias_dest='B8', result=47.0)
+            #self.copy_cell(alias_origin='A8', alias_dest='B8', result=47.0)
+
+            self.save_load('test')
 
         except Exception as e:
             logger.error(e.custom_message)
