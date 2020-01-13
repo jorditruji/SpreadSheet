@@ -127,7 +127,7 @@ class SpreadSheet:
 		with open('{}{}.txt'.format(path_, name), 'w') as output:
 			for row in range(max_row):
 				for letter in complete_letters:
-					col_row = expression_parser.ExpressionParser.parse_alias(alias=ordered_cells[i].alias)
+					col_row = utils.parse_alias(alias=ordered_cells[i].alias)
 					if col_row['col'] == letter and col_row['row'] == row+1:
 						if ordered_cells[i].type is 'expression':
 							text_output = text_output + str(ordered_cells[i].string_expression)
@@ -224,14 +224,14 @@ class SpreadSheet:
 		max_row = 0
 		list_letters = []
 		for cell in self.cells:
-			col_row = expression_parser.ExpressionParser.parse_alias(alias=cell.alias)
+			col_row = utils.parse_alias(alias=cell.alias)
 			if col_row['row']>max_row:
 				max_row = col_row['row']
 		ordered_cells = []
 		for row in range(max_row+1):
 			for letter in self.columns_alias:
 				for cell in self.cells:
-					col_row = expression_parser.ExpressionParser.parse_alias(alias=cell.alias)
+					col_row = utils.parse_alias(alias=cell.alias)
 					if col_row['row'] == row and col_row['col'] == letter:
 						ordered_cells.append(cell)
 						if letter not in list_letters:
