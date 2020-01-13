@@ -294,9 +294,6 @@ class SpreadSheet:
 		# TODO: Handle Exceptions!!!!!!!!
 		# Get cell origin information
 		position_origin = utils.parse_alias(alias=alias_origin)
-		cell_origin, _ = self.get_cell(alias=alias_origin)
-
-		involved_cells_origin = utils.find_cells(cell_origin.string_expression)
 
 		# Convert range (if its) to list of alias
 		if ":" in range:
@@ -304,78 +301,92 @@ class SpreadSheet:
 		else:
 			alias_list = [range]
 
-		for alias in alias_list:
+		cell_origin, _ = self.get_cell(alias=alias_origin)
 
-			# Extract column and row of destination
-			position_dest = utils.parse_alias(alias=alias)
+		if cell_origin.type is 'expression':
 
-			# Get column index in alias information list
-			indx_col_origin = self.columns_alias.index(position_origin['col'])
-			indx_col_dest = self.columns_alias.index(position_dest['col'])
+			involved_cells_origin = utils.find_cells(cell_origin.string_expression)
 
-			# Calculate differences between origin and destination
-			difference_col = indx_col_dest - indx_col_origin
-			difference_row = position_dest['row'] - position_origin['row']
+			for alias in alias_list:
 
-			string_expression = cell_origin.string_expression
-			expression_parts = []
+				# Extract column and row of destination
+				position_dest = utils.parse_alias(alias=alias)
 
-			for i, cell in enumerate(involved_cells_origin):
+				# Get column index in alias information list
+				indx_col_origin = self.columns_alias.index(position_origin['col'])
+				indx_col_dest = self.columns_alias.index(position_dest['col'])
 
-				absolutes = cell.count('$')
-				if absolutes == 0:
-					# For each involved cell alias, parse position and calculate new alias
-					tmp_position = utils.parse_alias(alias=cell)
-					new_col_indx = int(self.columns_alias.index(tmp_position['col'])) + difference_col
-					new_row = tmp_position['row'] + difference_row
-					new_col = self.columns_alias[new_col_indx]
+				# Calculate differences between origin and destination
+				difference_col = indx_col_dest - indx_col_origin
+				difference_row = position_dest['row'] - position_origin['row']
 
-					# New alias to be set in the string expression
-					new_alias = "{}{}".format(new_col, new_row)
+				string_expression = cell_origin.string_expression
+				expression_parts = []
 
-					if new_row <= 0 or new_col_indx < 0:
-						raise CopyAlias(alias_origin=cell, alias_dest=new_alias)
+				for i, cell in enumerate(involved_cells_origin):
 
-				elif absolutes == 1:
-					index_abs = cell.index('$')
-					aux_cell = cell.replace('$', '')
-					tmp_position = utils.parse_alias(alias=aux_cell)
-					if index_abs == 0:
-						new_col = "${}".format(tmp_position['col'])
-						new_row = tmp_position['row'] + difference_row
-					else:
+					absolutes = cell.count('$')
+					if absolutes == 0:
+						# For each involved cell alias, parse position and calculate new alias
+						tmp_position = utils.parse_alias(alias=cell)
 						new_col_indx = int(self.columns_alias.index(tmp_position['col'])) + difference_col
-						new_row = "${}".format(tmp_position['row'])
+						new_row = tmp_position['row'] + difference_row
 						new_col = self.columns_alias[new_col_indx]
 
-					# New alias to be set in the string expression
-					new_alias = "{}{}".format(new_col, new_row)
+						# New alias to be set in the string expression
+						new_alias = "{}{}".format(new_col, new_row)
 
-					if new_row <= 0 or new_col_indx < 0:
-						raise CopyAlias(alias_origin=cell, alias_dest=new_alias)
+						if new_row <= 0 or new_col_indx < 0:
+							raise CopyAlias(alias_origin=cell, alias_dest=new_alias)
 
-				elif absolutes == 2:
-					new_alias = cell
+					elif absolutes == 1:
+						index_abs = cell.index('$')
+						aux_cell = cell.replace('$', '')
+						tmp_position = utils.parse_alias(alias=aux_cell)
+						if index_abs == 0:
+							new_col = "${}".format(tmp_position['col'])
+							new_row = tmp_position['row'] + difference_row
+						else:
+							new_col_indx = int(self.columns_alias.index(tmp_position['col'])) + difference_col
+							new_row = "${}".format(tmp_position['row'])
+							new_col = self.columns_alias[new_col_indx]
+
+						# New alias to be set in the string expression
+						new_alias = "{}{}".format(new_col, new_row)
+
+						if new_row <= 0 or new_col_indx < 0:
+							raise CopyAlias(alias_origin=cell, alias_dest=new_alias)
+
+					elif absolutes == 2:
+						new_alias = cell
 
 
-				# Replace first alias found in string expression
-				string_expression = string_expression.replace(cell, new_alias, 1)
+					# Replace first alias found in string expression
+					string_expression = string_expression.replace(cell, new_alias, 1)
 
-				# Find finishing index for character treated, store it to rejoin later
-				index = string_expression.index(new_alias) + len(new_alias)
-				expression_parts.append(string_expression[:index])
+					# Find finishing index for character treated, store it to rejoin later
+					index = string_expression.index(new_alias) + len(new_alias)
+					expression_parts.append(string_expression[:index])
 
-				# Cut the changing string expression to not substitute replaced values.
-				# Everything is done in same order
-				string_expression = string_expression[index:]
+					# Cut the changing string expression to not substitute replaced values.
+					# Everything is done in same order
+					string_expression = string_expression[index:]
 
-			# Append residual parts of string expression.
-			expression_parts.append(string_expression)
-			new_string_expression = ''.join(expression_parts)
-			try:
-				self.set(alias=alias, value=new_string_expression)
-			except Exception as e:
-				print(e.custom_message)
+				# Append residual parts of string expression.
+				expression_parts.append(string_expression)
+				new_string_expression = ''.join(expression_parts)
+				try:
+					self.set(alias=alias, value=new_string_expression)
+				except Exception as e:
+					print(e.custom_message)
+		else:
+			if cell_origin.type is 'numeric':
+				value = str(int(cell_origin.value))
+			else:
+				value = cell_origin.value
+			for alias in alias_list:
+				self.set(alias=alias, value=value)
+
 
 
 

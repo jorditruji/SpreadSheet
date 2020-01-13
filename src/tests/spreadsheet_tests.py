@@ -94,7 +94,9 @@ class TestSpreadsheet(unittest.TestCase):
             self.set_value(alias='A7', value='=SUM(A1:A2)', result=21.0)
             self.set_value(alias='A8', value='=sum($A$1:A2, SUM($B$1:$B$2))', result=34.0)
 
-            #self.copy_cell(alias_origin='A8', alias_dest='B8', result=47.0)
+            self.copy_cell(alias_origin='A8', alias_dest='B8', result=47.0)
+
+            self.copy_cell(alias_origin='D1', alias_dest='D2', result='Hello World!')
 
             self.save_load('test')
 
