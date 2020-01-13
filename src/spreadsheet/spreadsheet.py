@@ -107,11 +107,39 @@ class SpreadSheet:
 		if path.exists(path_) is False:
 			raise PathNotFound(path_)
 
-		with open('{}{}.pkl'.format(path_, name), 'wb') as output:
-			pickle.dump(self, output)
+		ordered_cells, max_row, max_letter = self._order_cells()
 
-	@classmethod
-	def load(cls, name):
+		j=0
+		complete_letters = []
+		while self.columns_alias[j]!= max_letter:
+			complete_letters.append(self.columns_alias[j])
+			j = j+1
+		complete_letters.append(max_letter)
+
+		text_output = ''
+		i =0
+
+		with open('{}{}.txt'.format(path_, name), 'w') as output:
+			for row in range(max_row):
+				for letter in complete_letters:
+					col_row = expression_parser.ExpressionParser.parse_alias(alias=ordered_cells[i].alias)
+					if col_row['col'] == letter and col_row['row'] == row+1:
+						if ordered_cells[i].type is 'expression':
+							text_output = text_output + str(ordered_cells[i].string_expression)
+						elif ordered_cells[i].type is 'numeric':
+							text_output = text_output + str(int(ordered_cells[i].value))
+						else:
+							text_output = text_output + str(ordered_cells[i].value)
+						i = i+1
+					else:
+						text_output = text_output+''
+					
+					if letter != complete_letters[-1]:
+						text_output = text_output + ';'	
+				text_output = text_output + '\n' 
+			output.write(text_output)
+
+	def load(self, name):
 		"""
 		Load Spreadsheet class
 		Args:
@@ -119,14 +147,49 @@ class SpreadSheet:
 
 		"""
 		path_ = 'resources/'
-		directory = '{}{}.pkl'.format(path_, name)
+		directory = '{}{}.txt'.format(path_, name)
 		if path.exists(directory) is False:
 			raise PathNotFound(directory)
 
 		with open(directory, 'rb') as input:
-			spreadsheet = pickle.load(input)
+			spreadsheet_file = input.read().decode('utf-8')
+			file_cells_list = self._get_file_cells_list(spreadsheet_file)
 
-		return spreadsheet
+		row = 1
+		letter_idx = 0
+		formulas_cells = []
+		for idx, cell in enumerate(file_cells_list):
+			if cell == '\n':
+				row = row+1
+				letter_idx=0
+			elif cell == '':
+				letter_idx = letter_idx + 1
+			else:
+				final_col = self.columns_alias[letter_idx]
+				final_row = row
+				alias = final_col+str(final_row)
+
+				if cell[0]!='=':
+					self.set(alias, cell)
+				else:
+					formulas_dict={}
+					formulas_dict['cell']=cell
+					formulas_dict['alias']=alias
+					formulas_cells.append(formulas_dict)
+				letter_idx=letter_idx+1
+
+		i = 0
+		while len(formulas_cells)>0:
+			try:
+				self.set(formulas_cells[i]['alias'], formulas_cells[i]['cell'])
+				formulas_cells.remove(formulas_cells[i])
+			except:
+				if i<len(formulas_cells):
+					i = i+1
+				else:
+					i =0
+
+		return self
 
 	def __make_column_alias(self):
 		"""
@@ -144,6 +207,46 @@ class SpreadSheet:
 		# limit to n_cols
 		return letters
 
+
+	def _order_cells(self):
+		"""
+		Order cells numerically and alphabetically
+
+		Returns:
+			list: ordered list of cells
+
+		"""
+
+		max_row = 0
+		list_letters = []
+		for cell in self.cells:
+			col_row = expression_parser.ExpressionParser.parse_alias(alias=cell.alias)
+			if col_row['row']>max_row:
+				max_row = col_row['row']
+		ordered_cells = []
+		for row in range(max_row+1):
+			for letter in self.columns_alias:
+				for cell in self.cells:
+					col_row = expression_parser.ExpressionParser.parse_alias(alias=cell.alias)
+					if col_row['row'] == row and col_row['col'] == letter:
+						ordered_cells.append(cell)
+						if letter not in list_letters:
+							list_letters.append(letter)
+		max_letter = list_letters[-1]
+		return ordered_cells, max_row, max_letter
+
+
+	def _get_file_cells_list(self, spreadsheet_file):
+		"""
+		Split the S2V format into a list
+
+		Returns:
+			list: list of the different cell values read from S2V format
+		"""
+
+		current_string = spreadsheet_file.replace('\n', ';\n;')
+		spreadsheet_split = current_string.split(';')
+		return spreadsheet_split
 
 
 	def update_cell(self, alias, value):
