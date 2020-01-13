@@ -19,4 +19,9 @@ class PathNotFound(Exception):
     def __init__(self, path):
         self.custom_message = '{} does not exist'.format(path)
 
+class CopyAlias(Exception):
+    """Raised when caopying a cell, the calculated reference aliases in expression cannot be found"""
+    def __init__(self, alias_origin, alias_dest):
+        self.custom_message = 'Alias {} cannot be converted to alias {}'.format(alias_origin, alias_dest)
+
 

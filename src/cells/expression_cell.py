@@ -1,5 +1,5 @@
 from .cell import Cell
-from src.expression_parser import TokenExpression
+
 
 class ExpressionCell(Cell):
     """

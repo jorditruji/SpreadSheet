@@ -256,6 +256,12 @@ class Parser:
         result = result/(2+len(args))
         return result
 
+    def sum_func(self, a, b, *args):
+        result = a+b
+        for arg in args:
+            result += arg
+        return result
+
     def equal (self, a, b ):
         return a == b
 
@@ -364,9 +370,14 @@ class Parser:
             'random': random,
             'fac': self.fac,
             'log': math.log,
+            'MIN': min,
+            'MAX': max,
+            'MEAN': self.mean,
+            'SUM': self.sum_func,
             'min': min,
             'max': max,
-            'average': self.mean,
+            'mean': self.mean,
+            'sum': self.sum_func,
             'pyt': self.pyt,
             'pow': math.pow,
             'atan2': math.atan2,
@@ -757,7 +768,7 @@ class Parser:
                 if i == self.pos or (c != '_' and (c < '0' or c > '9')):
                     break
             str += c
-        print("String: {}".format(str))
+        #print("String: {}".format(str))
         if len(str) > 0 and (str in self.ops2):
             self.tokenindex = str
             self.tokenprio = 7
