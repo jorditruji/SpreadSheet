@@ -1,0 +1,8 @@
+10;6;7;Hello World!
+=A1+1;=B1+1;=C1+1;Hello World!
+=A1+A2;=B2+1;7;
+=A1*A2;=B3+1;6;
+=A2/A1;=B4+1;;
+=mean(A1:A2);=B5+1;;
+=SUM(A1:A2);;;
+=sum($A$1:A2, SUM($B$1:$B$2));=sum($A$1:B2, SUM($B$1:$B$2));;

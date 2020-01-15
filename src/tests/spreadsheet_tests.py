@@ -75,8 +75,8 @@ class TestSpreadsheet(unittest.TestCase):
             self.set_value(alias='A2', value='=A1+1', result=11.0)
             self.set_value(alias='D1', value='Hello World!', result='Hello World!')
 
-            # TODO: parsing decimals not supported !!!!!
-            #self.set_value(alias='C1', value='7.5', result=7.5)
+
+            self.set_value(alias='C3', value='7.5', result=7.5)
             self.set_value(alias='C1', value='7', result=7.0)
 
             # Test copy cells
@@ -97,6 +97,8 @@ class TestSpreadsheet(unittest.TestCase):
             self.copy_cell(alias_origin='A8', alias_dest='B8', result=47.0)
 
             self.copy_cell(alias_origin='D1', alias_dest='D2', result='Hello World!')
+
+            self.copy_cell(alias_origin='B1', alias_dest='C4', result=6.0)
 
             self.save_load('test')
 
