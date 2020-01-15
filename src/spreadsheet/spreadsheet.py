@@ -65,12 +65,8 @@ class SpreadSheet:
 
 			cell = self.cell_factory.create_cell(type=type, params=params)
 			# Once we have created the cell ww will evaluate its expression and update its value
-			involved_cells_alias = cell.expression.variables()
-			value_dict = {}
-			for alias in involved_cells_alias:
-					value_dict[alias] = self.get_cell(alias)[0].get_value()
+			self.update_expression(cell)
 
-			cell.update_value(value_dict)
 		else: 
 			cell = self.cell_factory.create_cell(type=type, params=params)
 		self.cells.append(cell)
@@ -255,6 +251,21 @@ class SpreadSheet:
 		spreadsheet_split = current_string.split(';')
 		return spreadsheet_split
 
+
+
+	def update_expression(self, cell_2_update):
+		"""
+		Updates every a concrete cell
+		Returns:
+			boolean: Success
+		"""
+		involved_cells_alias = cell_2_update.expression.variables()
+		value_dict = {}
+		for alias in involved_cells_alias:
+			value_dict[alias] = self.get_cell(alias)[0].value
+		cell_2_update.update_value(value_dict)				
+
+
 	def update_cell(self, alias, value):
 		"""
 		Updates every a concrete cell
@@ -269,12 +280,7 @@ class SpreadSheet:
 
 			if new_type == 'expression':
 				cell_2_update.expression = self.parser.parse(value[1:])
-				involved_cells_alias = cell_2_update.expression.variables()
-				value_dict = {}
-				for alias in involved_cells_alias:
-					value_dict[alias] = self.get_cell(alias)[0].value
-				cell.update_value(value_dict)				
-
+				self.update_expression(cell_2_update)
 			else:
 				cell_2_update.update_value(value)
 		else:
