@@ -66,6 +66,10 @@ class SpreadSheet:
 			cell = self.cell_factory.create_cell(type=type, params=params)
 			# Once we have created the cell ww will evaluate its expression and update its value
 			self.update_expression(cell)
+			subject_cells_alias = cell.expression.variables()
+			for alias in subject_cells_alias:
+				subject_cell, _idx = self.get_cell(alias)
+				subject_cell.attach(cell)
 
 		else: 
 			cell = self.cell_factory.create_cell(type=type, params=params)

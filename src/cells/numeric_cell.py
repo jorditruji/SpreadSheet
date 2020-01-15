@@ -22,3 +22,4 @@ class NumericCell(Cell):
         print('TYPE: {}'.format(self.type.upper()))
         print('VALUE: {}'.format(self.value))
         print('\n')
+

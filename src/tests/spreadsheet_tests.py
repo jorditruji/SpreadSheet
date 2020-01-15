@@ -68,6 +68,21 @@ class TestSpreadsheet(unittest.TestCase):
         self.assertEqual(self.spreadsheet, loaded_spreadsheet, 'Spreadsheets are not equal.')
         logger.success('ok!')
 
+    def update_value(self, alias, value, result):
+        self.spreadsheet.update_cell(alias, value)
+        cell, _idx = self.spreadsheet.get_cell(alias)
+        self.assertEqual(cell.value, result, 'Failed to update cell value.')
+
+    def test_subscriptions(self):
+        self.set_value(alias='A1', value='10', result=10.0)
+        self.set_value(alias='A2', value='=A1+1', result=11.0)   
+        cell_A1, _idx = self.spreadsheet.get_cell('A1')
+        cell_A2, _idx = self.spreadsheet.get_cell('A2')
+
+        self.update_value(alias='A1', value='15', result=15.0)
+        cell, _idx = self.spreadsheet.get_cell('A2')
+        self.assertEqual(cell.value, 16.0, 'Failed to update observer cells when subject whas updated') 
+
     def test(self):
         try:
             # Test set cell of every type
