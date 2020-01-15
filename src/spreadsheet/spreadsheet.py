@@ -5,6 +5,7 @@ from src.exceptions import AliasNotFound, CellNotFound, PathNotFound, CopyAlias
 import pickle
 from os import path
 from src.expression_parser.parser import Parser
+from src.cells import ExpressionCell, NumericCell, TextCell
 
 
 class SpreadSheet:
@@ -280,9 +281,8 @@ class SpreadSheet:
 		cell_2_update, idx = self.get_cell(alias)
 		new_type = utils.infer_cell_type(value=value)
 		# Updating cells without changing its type
-		if new_type == cell_2_update.type:
-
-			if new_type == 'expression':
+		if isinstance(cell_2_update, globals()[new_type]):
+			if new_type == 'ExpressionCell':
 				cell_2_update.expression = self.parser.parse(value[1:])
 				self.update_expression(cell_2_update)
 			else:

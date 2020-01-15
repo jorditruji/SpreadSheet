@@ -11,14 +11,13 @@ class Cell(Subject):
 
 
 	"""
-	_observers = list()
+
 
 	def __init__(self, alias=None):
 		super().__init__()
 		self.alias = alias
+		self._observers = list()
 
-	def update_value(self, value):
-		self.value = value
 
 	def get_value(self):
 		return self.value
