@@ -33,7 +33,10 @@ class Cell(Subject):
 		"""
 		Detach an observer from the subject.
 		"""
-		self._observers.remove(observer)
+		if len(self._observers) > 0:
+			for i, _observer in enumerate(self._observers):
+				if observer.alias is _observer.alias:
+					del self._observers[i]
 
 	
 	def notify(self):
@@ -41,8 +44,6 @@ class Cell(Subject):
 		Notify all observers about an event.
 		"""
 		for cell in self._observers:
-			print({self.alias:self.value})
-			print("Updating cell by subscription \n\n\n\n\n\n")
 			value_dict = {}
 			value_dict[self.alias] = self.value
 			cell.update_value(value_dict)

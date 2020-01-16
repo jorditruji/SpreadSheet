@@ -69,19 +69,26 @@ class TestSpreadsheet(unittest.TestCase):
         logger.success('ok!')
 
     def update_value(self, alias, value, result):
+        logger.info('Test update value')
+        logger.debug('TEST: Update {} with {}'.format(alias, value))
         self.spreadsheet.update_cell(alias, value)
         cell, _idx = self.spreadsheet.get_cell(alias)
         self.assertEqual(cell.value, result, 'Failed to update cell value.')
+        logger.success('ok!')
 
     def test_subscriptions(self):
         self.set_value(alias='A1', value='10', result=10.0)
         self.set_value(alias='A2', value='=A1+1', result=11.0)   
-        cell_A1, _idx = self.spreadsheet.get_cell('A1')
-        cell_A2, _idx = self.spreadsheet.get_cell('A2')
+        self.set_value(alias='A3', value='=A2', result=11.0)
 
         self.update_value(alias='A1', value='15', result=15.0)
         cell, _idx = self.spreadsheet.get_cell('A2')
-        self.assertEqual(cell.value, 16.0, 'Failed to update observer cells when subject whas updated') 
+        self.assertEqual(cell.value, 16.0, 'Failed to update observer cells when subject whas updated')
+
+        self.set_value(alias='B1', value='45', result=45.0)
+        self.update_value(alias='A2', value='=B1+2', result=47.0)
+        cell, _idx = self.spreadsheet.get_cell('A3')
+        self.assertEqual(cell.value, 47.0, 'Failed to update observer cells when subject whas updated')
 
     def test(self):
         try:

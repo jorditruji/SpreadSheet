@@ -36,7 +36,7 @@ class ExpressionCell(Cell):
         print(vars(self))
         print('\n')
 
-    def update_value(self,new_variable_dict):
+    def update_value(self, new_variable_dict):
         try:
             self.value_dict.update(new_variable_dict)
             self.value = self.expression.evaluate(self.value_dict)

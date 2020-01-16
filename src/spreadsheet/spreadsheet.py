@@ -67,14 +67,37 @@ class SpreadSheet:
 			cell = self.cell_factory.create_cell(type=type, params=params)
 			# Once we have created the cell ww will evaluate its expression and update its value
 			self.update_expression(cell)
-			subject_cells_alias = cell.expression.variables()
-			for alias in subject_cells_alias:
-				subject_cell, _idx = self.get_cell(alias)
-				subject_cell.attach(cell)
+			self.attach_to_cells(cell)
 
 		else: 
 			cell = self.cell_factory.create_cell(type=type, params=params)
 		self.cells.append(cell)
+
+	def detach_from_cells(self, cell):
+		"""
+		Detach a cell from cells
+		Args:
+			cell (Cell): cell to be detached
+
+		"""
+
+		subject_cells_alias = cell.expression.variables()
+		for alias in subject_cells_alias:
+			subject_cell, _idx = self.get_cell(alias)
+			subject_cell.detach(cell)
+
+	def attach_to_cells(self, cell):
+		"""
+		Attach a cell to cells
+		Args:
+			cell (Cell): cell to be detached
+
+		"""
+
+		subject_cells_alias = cell.expression.variables()
+		for alias in subject_cells_alias:
+			subject_cell, _idx = self.get_cell(alias)
+			subject_cell.attach(cell)
 
 	def get_cell(self, alias):
 		"""
@@ -100,7 +123,9 @@ class SpreadSheet:
 			alias (str): Cell alias
 		"""
 		try:
-			_, indx = self.get_cell(alias)
+			cell, indx = self.get_cell(alias)
+			if cell.type is 'expression':
+				self.detach_from_cells(cell)
 			self.cells.pop(indx)
 		except Exception as e:
 			print(e.custom_message)
@@ -268,7 +293,9 @@ class SpreadSheet:
 		value_dict = {}
 		for alias in involved_cells_alias:
 			value_dict[alias] = self.get_cell(alias)[0].value
-		cell_2_update.update_value(value_dict)				
+		cell_2_update.update_value(value_dict)
+		self.detach_from_cells(cell_2_update)
+		self.attach_to_cells(cell_2_update)
 
 
 	def update_cell(self, alias, value):
