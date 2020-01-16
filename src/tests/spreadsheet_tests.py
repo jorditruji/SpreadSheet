@@ -76,7 +76,7 @@ class TestSpreadsheet(unittest.TestCase):
         self.assertEqual(cell.value, result, 'Failed to update cell value.')
         logger.success('ok!')
 
-    def test_subscriptions(self):
+    def subscriptions(self):
         self.set_value(alias='A1', value='10', result=10.0)
         self.set_value(alias='A2', value='=A1+1', result=11.0)   
         self.set_value(alias='A3', value='=A2', result=11.0)
