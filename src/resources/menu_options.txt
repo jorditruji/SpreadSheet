@@ -1,10 +1,10 @@
 SpreadSheet Menu:
 
-1. New Spreadsheet
+1. Create new Spreadsheet
 2. Save Spreadsheet
 3. Load Spreadsheet
 4. Set Value
 5. Get Value
 6. Copy cell
-7. Print current spreadsheet
+7. Print current Spreadsheet
 8. Quit
