@@ -24,4 +24,9 @@ class CopyAlias(Exception):
     def __init__(self, alias_origin, alias_dest):
         self.custom_message = 'Alias {} cannot be converted to alias {}'.format(alias_origin, alias_dest)
 
+class EmptySpreadsheet(Exception):
+    """Raised when an empty spreadsheet wants to be saved"""
+    def __init__(self):
+        self.custom_message = 'The is no content in the spreadsheet'
+
 

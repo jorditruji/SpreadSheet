@@ -1,10 +1,11 @@
 import string
 from src.cells import CellFactory
 from src.utils.utils import utils
-from src.exceptions import AliasNotFound, CellNotFound, PathNotFound, CopyAlias
+from src.exceptions import AliasNotFound, CellNotFound, PathNotFound, CopyAlias, EmptySpreadsheet
 import pickle
 from os import path
 from src.expression_parser.parser import Parser
+import csv
 
 
 class SpreadSheet:
@@ -111,6 +112,9 @@ class SpreadSheet:
 		"""
 		if path.exists(path_) is False:
 			raise PathNotFound(path_)
+
+		if len(self.cells) == 0:
+			raise EmptySpreadsheet()
 
 		ordered_cells, max_row, max_letter = self._order_cells()
 
@@ -241,7 +245,6 @@ class SpreadSheet:
 							list_letters.append(letter)
 		max_letter = list_letters[-1]
 		return ordered_cells, max_row, max_letter
-
 
 	def _get_file_cells_list(self, spreadsheet_file):
 		"""
@@ -387,8 +390,29 @@ class SpreadSheet:
 			for alias in alias_list:
 				self.set(alias=alias, value=value)
 
+	def print(self):
+		self.save(name='tmp')
 
+		with open('resources/tmp.txt') as csvfile:
+		    reader = csv.reader(csvfile, delimiter=';')
+		    all_rows = []
+		    for row in reader:
+		        all_rows.append(row)
 
+		max_col_width = [0] * len(all_rows[0])
+		for row in all_rows:
+		    for idx, col in enumerate(row):
+		        max_col_width[idx] = max(len(col), max_col_width[idx])
+
+		for row in all_rows:
+		    to_print = ""
+		    for idx, col in enumerate(row):
+		        to_print += self._pad_col(col, max_col_width[idx]) + " | "
+		    print("-"*len(to_print))
+		    print(to_print)
+
+	def _pad_col(self, col, max_width):
+	    return col.ljust(max_width)
 
 
 
