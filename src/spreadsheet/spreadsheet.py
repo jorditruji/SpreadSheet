@@ -6,6 +6,7 @@ import pickle
 from os import path
 from src.expression_parser.parser import Parser
 import csv
+from src.cells import ExpressionCell, NumericCell, TextCell
 
 
 class SpreadSheet:
@@ -66,15 +67,38 @@ class SpreadSheet:
 
 			cell = self.cell_factory.create_cell(type=type, params=params)
 			# Once we have created the cell ww will evaluate its expression and update its value
-			involved_cells_alias = cell.expression.variables()
-			value_dict = {}
-			for alias in involved_cells_alias:
-					value_dict[alias] = self.get_cell(alias)[0].get_value()
+			self.update_expression(cell)
+			self.attach_to_cells(cell)
 
-			cell.update_value(value_dict)
 		else: 
 			cell = self.cell_factory.create_cell(type=type, params=params)
 		self.cells.append(cell)
+
+	def detach_from_cells(self, cell):
+		"""
+		Detach a cell from cells
+		Args:
+			cell (Cell): cell to be detached
+
+		"""
+
+		subject_cells_alias = cell.expression.variables()
+		for alias in subject_cells_alias:
+			subject_cell, _idx = self.get_cell(alias)
+			subject_cell.detach(cell)
+
+	def attach_to_cells(self, cell):
+		"""
+		Attach a cell to cells
+		Args:
+			cell (Cell): cell to be detached
+
+		"""
+
+		subject_cells_alias = cell.expression.variables()
+		for alias in subject_cells_alias:
+			subject_cell, _idx = self.get_cell(alias)
+			subject_cell.attach(cell)
 
 	def get_cell(self, alias):
 		"""
@@ -100,7 +124,9 @@ class SpreadSheet:
 			alias (str): Cell alias
 		"""
 		try:
-			_, indx = self.get_cell(alias)
+			cell, indx = self.get_cell(alias)
+			if cell.type is 'expression':
+				self.detach_from_cells(cell)
 			self.cells.pop(indx)
 		except Exception as e:
 			print(e.custom_message)
@@ -258,6 +284,20 @@ class SpreadSheet:
 		spreadsheet_split = current_string.split(';')
 		return spreadsheet_split
 
+	def update_expression(self, cell_2_update):
+		"""
+		Updates every a concrete cell
+		Returns:
+			boolean: Success
+		"""
+		involved_cells_alias = cell_2_update.expression.variables()
+		value_dict = {}
+		for alias in involved_cells_alias:
+			value_dict[alias] = self.get_cell(alias)[0].value
+		cell_2_update.update_value(value_dict)
+		self.detach_from_cells(cell_2_update)
+		self.attach_to_cells(cell_2_update)
+
 	def update_cell(self, alias, value):
 		"""
 		Updates every a concrete cell
@@ -268,15 +308,10 @@ class SpreadSheet:
 		cell_2_update, idx = self.get_cell(alias)
 		new_type = utils.infer_cell_type(value=value)
 		# Updating cells without changing its type
-		if new_type == cell_2_update.type:
-
-			if new_type == 'expression':
+		if isinstance(cell_2_update, globals()[new_type]):
+			if new_type == 'ExpressionCell':
 				cell_2_update.expression = self.parser.parse(value[1:])
-				involved_cells_alias = cell_2_update.expression.variables()
-				value_dict = {}
-				for alias in involved_cells_alias:
-					value_dict[alias] = self.get_cell(alias)[0].value
-				cell.update_value(value_dict)				
+				self.update_expression(cell_2_update)
 
 			else:
 				cell_2_update.update_value(value)
@@ -413,7 +448,6 @@ class SpreadSheet:
 
 	def _pad_col(self, col, max_width):
 	    return col.ljust(max_width)
-
 
 
 

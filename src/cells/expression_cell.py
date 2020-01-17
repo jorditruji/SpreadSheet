@@ -23,6 +23,7 @@ class ExpressionCell(Cell):
         self.expression = params['expression']
         self.string_expression = params['value']
         self.value = None
+        self.value_dict = {}
 
     def printify(self):
         print('=================GET CELL====================')
@@ -35,9 +36,12 @@ class ExpressionCell(Cell):
         print(vars(self))
         print('\n')
 
-    def update_value(self,value_dict):
+    def update_value(self, new_variable_dict):
         try:
-            self.value = self.expression.evaluate(value_dict)
+            self.value_dict.update(new_variable_dict)
+            self.value = self.expression.evaluate(self.value_dict)
+            self.notify()
+
         except Exception as e:
             raise e
 

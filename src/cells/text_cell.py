@@ -16,6 +16,10 @@ class TextCell(Cell):
         self.type = 'text'
         self.value = params['value']
 
+    def update_value(self, value):
+        self.value = value
+        self.notify()
+
     def printify(self):
         print('=================GET CELL====================')
         print('CELL: {}'.format(self.alias))

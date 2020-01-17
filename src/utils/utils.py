@@ -20,7 +20,8 @@ class Utils(object):
         """
 
         type = 'TextCell'
-        if value.isdigit():
+        tmp_value = value.replace('.', '')
+        if tmp_value.isdigit():
             type = 'NumericCell'
 
         # Expressions should start with =

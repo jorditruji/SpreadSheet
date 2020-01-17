@@ -16,9 +16,14 @@ class NumericCell(Cell):
         self.type = 'numeric'
         self.value = float(params['value'])
 
+    def update_value(self, value):
+        self.value = float(value)
+        self.notify()
+
     def printify(self):
         print('=================GET CELL====================')
         print('CELL: {}'.format(self.alias))
         print('TYPE: {}'.format(self.type.upper()))
         print('VALUE: {}'.format(self.value))
         print('\n')
+

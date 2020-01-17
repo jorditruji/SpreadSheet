@@ -68,6 +68,28 @@ class TestSpreadsheet(unittest.TestCase):
         self.assertEqual(self.spreadsheet, loaded_spreadsheet, 'Spreadsheets are not equal.')
         logger.success('ok!')
 
+    def update_value(self, alias, value, result):
+        logger.info('Test update value')
+        logger.debug('TEST: Update {} with {}'.format(alias, value))
+        self.spreadsheet.update_cell(alias, value)
+        cell, _idx = self.spreadsheet.get_cell(alias)
+        self.assertEqual(cell.value, result, 'Failed to update cell value.')
+        logger.success('ok!')
+
+    def subscriptions(self):
+        self.set_value(alias='A1', value='10', result=10.0)
+        self.set_value(alias='A2', value='=A1+1', result=11.0)   
+        self.set_value(alias='A3', value='=A2', result=11.0)
+
+        self.update_value(alias='A1', value='15', result=15.0)
+        cell, _idx = self.spreadsheet.get_cell('A2')
+        self.assertEqual(cell.value, 16.0, 'Failed to update observer cells when subject whas updated')
+
+        self.set_value(alias='B1', value='45', result=45.0)
+        self.update_value(alias='A2', value='=B1+2', result=47.0)
+        cell, _idx = self.spreadsheet.get_cell('A3')
+        self.assertEqual(cell.value, 47.0, 'Failed to update observer cells when subject whas updated')
+
     def test(self):
         try:
             # Test set cell of every type
@@ -75,8 +97,8 @@ class TestSpreadsheet(unittest.TestCase):
             self.set_value(alias='A2', value='=A1+1', result=11.0)
             self.set_value(alias='D1', value='Hello World!', result='Hello World!')
 
-            # TODO: parsing decimals not supported !!!!!
-            #self.set_value(alias='C1', value='7.5', result=7.5)
+
+            self.set_value(alias='C3', value='7.5', result=7.5)
             self.set_value(alias='C1', value='7', result=7.0)
 
             # Test copy cells
@@ -97,6 +119,8 @@ class TestSpreadsheet(unittest.TestCase):
             self.copy_cell(alias_origin='A8', alias_dest='B8', result=47.0)
 
             self.copy_cell(alias_origin='D1', alias_dest='D2', result='Hello World!')
+
+            self.copy_cell(alias_origin='B1', alias_dest='C4', result=6.0)
 
             self.save_load('test')
 
