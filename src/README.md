@@ -22,14 +22,21 @@ Expression cells value always start with `=`,supports all kind of basic operands
 
 A function can be called inside another function.
 
-##### Parser and evaluator:
+#### Parser and evaluator:
 To handle the cells involved in the operation, ranges defined by `first_alias:last_alias` and single alias 
 separed by `,` can be used.
 
-##### Copy cell content:
+Parser and evaluator used is taken from a Python code made by Vera Mazhuga based on [js-expression-eval](https://github.com/silentmatt/js-expression-eval), by Matthew Crumley 
+
+
+#### Copy cell content:
+Any cell can be coppied to a cell or ranges of cells.
+
+Expression cells should change the expression involved cells if these are not fixed with `$`.
+
 Aliases column and row can be fixed using `$` before column label and/or row number to avoid the changing of
 the cells involved in a expression when copying a cell to other cell or cells.
-##### Observer:
+#### Observer:
 
 Referenced cells in expression are handled by subscribing observers inside the cells. So when a value is updated,
 the cells that have this cell inside an expression is notified to be evaluated again.
