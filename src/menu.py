@@ -21,7 +21,8 @@ class Menu:
                 "4": self.set_cell_value,
                 "5": self.get_cell_value,
                 "6": self.copy_cell,
-                "7": self.quit
+                "7": self.print_spreadsheet,
+                "8": self.quit
         }
 
     def display_menu(self):
@@ -108,6 +109,16 @@ class Menu:
             self.spreadsheet.copy_cell(alias_origin=alias_origin, range=range)
         except Exception as e:
             print(e.custom_message)
+
+    def print_spreadsheet(self):
+        if self.spreadsheet is not None:
+            try:
+                self.spreadsheet.print()
+            except Exception as e:
+                print(e.custom_message)
+        else:
+            print('There is no initialized Spreadsheet Class.\n')
+
 
     def quit(self):
         print("Bye!")

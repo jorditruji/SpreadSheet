@@ -6,4 +6,5 @@ SpreadSheet Menu:
 4. Set Value
 5. Get Value
 6. Copy cell
-7. Quit
+7. Print current spreadsheet
+8. Quit
