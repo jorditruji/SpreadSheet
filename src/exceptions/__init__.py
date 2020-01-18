@@ -1,1 +1,1 @@
-from .exceptions import AliasNotFound, CellNotFound, PathNotFound, CopyAlias, EmptySpreadsheet
+from .exceptions import AliasNotFound, CellNotFound, PathNotFound, CopyAlias, EmptySpreadsheet, FailedToEvaluateExpression, EmptyInvolvedCells

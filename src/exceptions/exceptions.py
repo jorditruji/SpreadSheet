@@ -29,4 +29,14 @@ class EmptySpreadsheet(Exception):
     def __init__(self):
         self.custom_message = 'The is no content in the spreadsheet'
 
+class FailedToEvaluateExpression(Exception):
+    """Raised when an expression cannot be evaluated"""
+    def __init__(self, alias):
+        self.custom_message = 'Failed to evaluate expression in {}'.format(alias)
+
+class EmptyInvolvedCells(Exception):
+    """Raised when Involved cells have no value"""
+    def __init__(self, alias):
+        self.custom_message = 'Cell {} is empty, Expression cannot be evaluated'.format(alias)
+
 

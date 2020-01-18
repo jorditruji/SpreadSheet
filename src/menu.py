@@ -68,32 +68,38 @@ class Menu:
             print(e.custom_message)
 
     def set_cell_value(self):
-        print('Set a cell value Selected')
-        #TODO: Considerar no ficar tantes compovacions aqui
-        alias = input("Enter cell alias: ")
-        try:
-            # Check if cell exists
-            cell, indx = self.spreadsheet.get_cell(alias=alias)
-            print('Cell {} already exists'.format(alias))
+        print('\nSet a cell value Selected')
 
-            # Ask for replace
-            replace = input('Do you want to replace it (y/n)? ')
-            if replace == 'y':
-                value = input("Enter a value or expression: ")
-
-                self.spreadsheet.update_cell(alias=alias, value=value)
-        except Exception as e:
-            print(e.custom_message)
-            # Cell don't exist, it can be created
-            value = input("Enter a value or expression: ")
+        if self.spreadsheet is None:
+            print('Any spreadsheet created or loaded.')
+            print('Please select option (1=New Spreadsheet, 2=Load Spreadsheet).\n')
+        else:
+            alias = input("Enter cell alias: ")
             try:
-                self.spreadsheet.set(alias=alias, value=value)
+                # Check if cell exists
+                cell, _ = self.spreadsheet.get_cell(alias=alias)
+                print('Cell {} already exists'.format(alias))
+
+                if cell is not None:
+                    # Ask for replace
+                    replace = input('Do you want to replace it (y/n)? ')
+                    if replace == 'y':
+                        value = input("Enter a value or expression: ")
+
+                        self.spreadsheet.update_cell(alias=alias, value=value)
+                else:
+                    # Cell don't exist, it can be created
+                    value = input("Enter a value or expression: ")
+                    try:
+                        self.spreadsheet.set(alias=alias, value=value)
+                    except Exception as e:
+                        print(e.custom_message)
             except Exception as e:
-                print(e)
-                print("Failed to evaluate cell. It depends on other cells which have no value")
+                print(e.custom_message)
+
 
     def get_cell_value(self):
-        print('Get a cell value')
+        print('\nGet a cell value')
         alias = input("Enter cell alias: ")
         try:
             cell, _ = self.spreadsheet.get_cell(alias=alias)
@@ -102,7 +108,7 @@ class Menu:
             print(e.custom_message)
 
     def copy_cell(self):
-        print('Copy cell content')
+        print('\nCopy cell content')
         alias_origin = input('Enter cell to be coppied: ')
         range = input("Enter cell or range of cells: ")
         try:

@@ -1,7 +1,7 @@
 import string
 from src.cells import CellFactory
 from src.utils.utils import utils
-from src.exceptions import AliasNotFound, CellNotFound, PathNotFound, CopyAlias, EmptySpreadsheet
+from src.exceptions import AliasNotFound, CellNotFound, PathNotFound, CopyAlias, EmptySpreadsheet, FailedToEvaluateExpression, EmptyInvolvedCells
 import pickle
 from os import path
 from src.expression_parser.parser import Parser
@@ -111,11 +111,16 @@ class SpreadSheet:
 			Cell: The Cell object itself
 
 		"""
+		alias.upper()
+		cell_pos = utils.parse_alias(alias)
+		if cell_pos['col'] not in self.columns_alias:
+			raise AliasNotFound(col=cell_pos['col'])
+
 		for indx, cell in enumerate(self.cells):
 			if cell.alias == alias:
 				return cell, indx
 
-		raise CellNotFound(alias=alias)
+		return None
 
 	def remove_cell(self, alias):
 		"""
@@ -293,7 +298,12 @@ class SpreadSheet:
 		involved_cells_alias = cell_2_update.expression.variables()
 		value_dict = {}
 		for alias in involved_cells_alias:
-			value_dict[alias] = self.get_cell(alias)[0].value
+			cell = self.get_cell(alias)
+			if cell is not None:
+				value_dict[alias] = cell[0].value
+			else:
+				raise EmptyInvolvedCells(alias)
+
 		cell_2_update.update_value(value_dict)
 		self.detach_from_cells(cell_2_update)
 		self.attach_to_cells(cell_2_update)
@@ -429,22 +439,22 @@ class SpreadSheet:
 		self.save(name='tmp')
 
 		with open('resources/tmp.txt') as csvfile:
-		    reader = csv.reader(csvfile, delimiter=';')
-		    all_rows = []
-		    for row in reader:
-		        all_rows.append(row)
+			reader = csv.reader(csvfile, delimiter=';')
+			all_rows = []
+			for row in reader:
+				all_rows.append(row)
 
 		max_col_width = [0] * len(all_rows[0])
 		for row in all_rows:
-		    for idx, col in enumerate(row):
-		        max_col_width[idx] = max(len(col), max_col_width[idx])
+			for idx, col in enumerate(row):
+				max_col_width[idx] = max(len(col), max_col_width[idx])
 
 		for row in all_rows:
-		    to_print = ""
-		    for idx, col in enumerate(row):
-		        to_print += self._pad_col(col, max_col_width[idx]) + " | "
-		    print("-"*len(to_print))
-		    print(to_print)
+			to_print = ""
+			for idx, col in enumerate(row):
+				to_print += self._pad_col(col, max_col_width[idx]) + " | "
+			print("-"*len(to_print))
+			print(to_print)
 
 	def _pad_col(self, col, max_width):
 	    return col.ljust(max_width)

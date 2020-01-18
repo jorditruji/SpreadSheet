@@ -65,8 +65,8 @@ class Utils(object):
         """
 
         range_list = range_.split(':')
-        min_range = cls.parse_alias(alias=range_list[0])
-        max_range = cls.parse_alias(alias=range_list[1])
+        min_range = cls.parse_alias(alias=range_list[0].upper())
+        max_range = cls.parse_alias(alias=range_list[1].upper())
 
         alias_list = []
         init_row = int(min_range['row'])
