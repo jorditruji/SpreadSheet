@@ -12,17 +12,17 @@
 #
 import os
 import sys
-#sys.path.insert(0, os.path.abspath('.'))
-sys.path.append('/home/jordi.morera.trujil/Escriptori/SpreadSheet/source')
+sys.path.append(os.path.abspath('/home/eric.presas/UPC/ARQSOFT/SpreadSheet/'))
+
 
 # -- Project information -----------------------------------------------------
 
-project = 'SpreadSheet'
-copyright = '2019, Eric Presas Valga, Jordi Morera Trujillo, Janna Escur Gelabert'
-author = 'Eric Presas Valga, Jordi Morera Trujillo, Janna Escur Gelabert'
+project = 'Spreadsheet'
+copyright = '2020, Jordi Morera, Janna Escur, Eric Presas'
+author = 'Jordi Morera, Janna Escur, Eric Presas'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1'
+release = '1.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -31,7 +31,6 @@ release = '0.1'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinxcontrib.napoleon'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -48,13 +47,13 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-# html_theme = 'alabaster'
+html_theme = 'alabaster'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_theme = 'rtcat_sphinx_theme'
-import rtcat_sphinx_theme
-html_theme_path = [rtcat_sphinx_theme.get_html_theme_path()]
-
 html_static_path = ['_static']
+
+
+# Add napoleon to the extensions list
+extensions = ['sphinx.ext.napoleon']

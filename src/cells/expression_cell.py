@@ -10,13 +10,6 @@ class ExpressionCell(Cell):
 
     """
 
-    supported_expressions = [
-        "SUMA",
-        "MIN",
-        "MAX",
-        "PROMEDIO"
-    ]
-
     def __init__(self, params):
         super().__init__(alias=params['alias'])
         self.type = 'expression'
@@ -31,8 +24,6 @@ class ExpressionCell(Cell):
         print('TYPE: {}'.format(self.type.upper()))
         print('VALUE: {}'.format(self.value))
         print('EXPRESSION: {}'.format(self.string_expression))
-        #printer = self.expression.prettyprint()
-        #print(printer)
         print(vars(self))
         print('\n')
 

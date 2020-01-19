@@ -1,10 +1,7 @@
-source
-======
+src
+===
 
 .. toctree::
    :maxdepth: 4
 
-   cell
-   expression
-   menu
-   spreadsheet
+   src

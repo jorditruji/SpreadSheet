@@ -1,0 +1,354 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>src.cells package &#8212; Spreadsheet 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="src.exceptions package" href="src.exceptions.html" />
+    <link rel="prev" title="src package" href="src.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="src-cells-package">
+<h1>src.cells package<a class="headerlink" href="#src-cells-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-src.cells.cell">
+<span id="src-cells-cell-module"></span><h2>src.cells.cell module<a class="headerlink" href="#module-src.cells.cell" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="src.cells.cell.Cell">
+<em class="property">class </em><code class="sig-prename descclassname">src.cells.cell.</code><code class="sig-name descname">Cell</code><span class="sig-paren">(</span><em class="sig-param">alias=None</em><span class="sig-paren">)</span><a class="headerlink" href="#src.cells.cell.Cell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.cells.subject.Subject" title="src.cells.subject.Subject"><code class="xref py py-class docutils literal notranslate"><span class="pre">src.cells.subject.Subject</span></code></a></p>
+<p>Holds the basic content of a cell.</p>
+<dl class="attribute">
+<dt id="src.cells.cell.Cell.alias">
+<code class="sig-name descname">alias</code><a class="headerlink" href="#src.cells.cell.Cell.alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for the cell</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.cells.cell.Cell.attach">
+<code class="sig-name descname">attach</code><span class="sig-paren">(</span><em class="sig-param">observer</em><span class="sig-paren">)</span><a class="headerlink" href="#src.cells.cell.Cell.attach" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attach an observer to the subject.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.cells.cell.Cell.detach">
+<code class="sig-name descname">detach</code><span class="sig-paren">(</span><em class="sig-param">observer</em><span class="sig-paren">)</span><a class="headerlink" href="#src.cells.cell.Cell.detach" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detach an observer from the subject.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.cells.cell.Cell.get_value">
+<code class="sig-name descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.cells.cell.Cell.get_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="src.cells.cell.Cell.notify">
+<code class="sig-name descname">notify</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.cells.cell.Cell.notify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Notify all observers about an event.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="src.cells.cell.cell">
+<code class="sig-prename descclassname">src.cells.cell.</code><code class="sig-name descname">cell</code><a class="headerlink" href="#src.cells.cell.cell" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#src.cells.cell.Cell" title="src.cells.cell.Cell"><code class="xref py py-class docutils literal notranslate"><span class="pre">src.cells.cell.Cell</span></code></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.cells.cell_factory">
+<span id="src-cells-cell-factory-module"></span><h2>src.cells.cell_factory module<a class="headerlink" href="#module-src.cells.cell_factory" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="src.cells.cell_factory.CellFactory">
+<em class="property">class </em><code class="sig-prename descclassname">src.cells.cell_factory.</code><code class="sig-name descname">CellFactory</code><a class="headerlink" href="#src.cells.cell_factory.CellFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="src.cells.cell_factory.CellFactory.create_cell">
+<em class="property">static </em><code class="sig-name descname">create_cell</code><span class="sig-paren">(</span><em class="sig-param">type</em>, <em class="sig-param">params</em><span class="sig-paren">)</span><a class="headerlink" href="#src.cells.cell_factory.CellFactory.create_cell" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.cells.expression_cell">
+<span id="src-cells-expression-cell-module"></span><h2>src.cells.expression_cell module<a class="headerlink" href="#module-src.cells.expression_cell" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="src.cells.expression_cell.ExpressionCell">
+<em class="property">class </em><code class="sig-prename descclassname">src.cells.expression_cell.</code><code class="sig-name descname">ExpressionCell</code><span class="sig-paren">(</span><em class="sig-param">params</em><span class="sig-paren">)</span><a class="headerlink" href="#src.cells.expression_cell.ExpressionCell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.cells.cell.Cell" title="src.cells.cell.Cell"><code class="xref py py-class docutils literal notranslate"><span class="pre">src.cells.cell.Cell</span></code></a></p>
+<p>Holds the additional content for expression cells</p>
+<dl class="attribute">
+<dt id="src.cells.expression_cell.ExpressionCell.params">
+<code class="sig-name descname">params</code><a class="headerlink" href="#src.cells.expression_cell.ExpressionCell.params" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.cells.expression_cell.ExpressionCell.printify">
+<code class="sig-name descname">printify</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.cells.expression_cell.ExpressionCell.printify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="src.cells.expression_cell.ExpressionCell.update_value">
+<code class="sig-name descname">update_value</code><span class="sig-paren">(</span><em class="sig-param">new_variable_dict</em><span class="sig-paren">)</span><a class="headerlink" href="#src.cells.expression_cell.ExpressionCell.update_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.cells.numeric_cell">
+<span id="src-cells-numeric-cell-module"></span><h2>src.cells.numeric_cell module<a class="headerlink" href="#module-src.cells.numeric_cell" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="src.cells.numeric_cell.NumericCell">
+<em class="property">class </em><code class="sig-prename descclassname">src.cells.numeric_cell.</code><code class="sig-name descname">NumericCell</code><span class="sig-paren">(</span><em class="sig-param">params</em><span class="sig-paren">)</span><a class="headerlink" href="#src.cells.numeric_cell.NumericCell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.cells.cell.Cell" title="src.cells.cell.Cell"><code class="xref py py-class docutils literal notranslate"><span class="pre">src.cells.cell.Cell</span></code></a></p>
+<p>Holds the additional content for numeric cells</p>
+<dl class="attribute">
+<dt id="src.cells.numeric_cell.NumericCell.value">
+<code class="sig-name descname">value</code><a class="headerlink" href="#src.cells.numeric_cell.NumericCell.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cell value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int, float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="src.cells.numeric_cell.NumericCell.position">
+<code class="sig-name descname">position</code><a class="headerlink" href="#src.cells.numeric_cell.NumericCell.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Position (col, row) of the cell</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>tupple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="src.cells.numeric_cell.NumericCell.alias">
+<code class="sig-name descname">alias</code><a class="headerlink" href="#src.cells.numeric_cell.NumericCell.alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for the cell</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.cells.numeric_cell.NumericCell.printify">
+<code class="sig-name descname">printify</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.cells.numeric_cell.NumericCell.printify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="src.cells.numeric_cell.NumericCell.update_value">
+<code class="sig-name descname">update_value</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#src.cells.numeric_cell.NumericCell.update_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.cells.subject">
+<span id="src-cells-subject-module"></span><h2>src.cells.subject module<a class="headerlink" href="#module-src.cells.subject" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="src.cells.subject.Subject">
+<em class="property">class </em><code class="sig-prename descclassname">src.cells.subject.</code><code class="sig-name descname">Subject</code><a class="headerlink" href="#src.cells.subject.Subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>The Subject interface declares a set of methods for managing subscribers.</p>
+<dl class="method">
+<dt id="src.cells.subject.Subject.attach">
+<em class="property">abstract </em><code class="sig-name descname">attach</code><span class="sig-paren">(</span><em class="sig-param">observer</em><span class="sig-paren">)</span><a class="headerlink" href="#src.cells.subject.Subject.attach" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attach an observer to the subject.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.cells.subject.Subject.detach">
+<em class="property">abstract </em><code class="sig-name descname">detach</code><span class="sig-paren">(</span><em class="sig-param">observer</em><span class="sig-paren">)</span><a class="headerlink" href="#src.cells.subject.Subject.detach" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detach an observer from the subject.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.cells.subject.Subject.notify">
+<em class="property">abstract </em><code class="sig-name descname">notify</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.cells.subject.Subject.notify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Notify all observers about an event.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.cells.text_cell">
+<span id="src-cells-text-cell-module"></span><h2>src.cells.text_cell module<a class="headerlink" href="#module-src.cells.text_cell" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="src.cells.text_cell.TextCell">
+<em class="property">class </em><code class="sig-prename descclassname">src.cells.text_cell.</code><code class="sig-name descname">TextCell</code><span class="sig-paren">(</span><em class="sig-param">params</em><span class="sig-paren">)</span><a class="headerlink" href="#src.cells.text_cell.TextCell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.cells.cell.Cell" title="src.cells.cell.Cell"><code class="xref py py-class docutils literal notranslate"><span class="pre">src.cells.cell.Cell</span></code></a></p>
+<p>Holds the additional content for text cells</p>
+<dl class="attribute">
+<dt id="src.cells.text_cell.TextCell.value">
+<code class="sig-name descname">value</code><a class="headerlink" href="#src.cells.text_cell.TextCell.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cell value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int, float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="src.cells.text_cell.TextCell.alias">
+<code class="sig-name descname">alias</code><a class="headerlink" href="#src.cells.text_cell.TextCell.alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for the cell</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.cells.text_cell.TextCell.printify">
+<code class="sig-name descname">printify</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.cells.text_cell.TextCell.printify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="src.cells.text_cell.TextCell.update_value">
+<code class="sig-name descname">update_value</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#src.cells.text_cell.TextCell.update_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.cells">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.cells" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Spreadsheet</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="src.html">src package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="src.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">src.cells package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-src.cells.cell">src.cells.cell module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-src.cells.cell_factory">src.cells.cell_factory module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-src.cells.expression_cell">src.cells.expression_cell module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-src.cells.numeric_cell">src.cells.numeric_cell module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-src.cells.subject">src.cells.subject module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-src.cells.text_cell">src.cells.text_cell module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-src.cells">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.exceptions.html">src.exceptions package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.spreadsheet.html">src.spreadsheet package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.utils.html">src.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#module-src.menu">src.menu module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#module-src">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="src.html">src package</a><ul>
+      <li>Previous: <a href="src.html" title="previous chapter">src package</a></li>
+      <li>Next: <a href="src.exceptions.html" title="next chapter">src.exceptions package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Jordi Morera, Janna Escur, Eric Presas.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/src.cells.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
