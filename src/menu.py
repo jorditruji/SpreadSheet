@@ -77,17 +77,20 @@ class Menu:
             alias = input("Enter cell alias: ")
             try:
                 # Check if cell exists
-                cell, _ = self.spreadsheet.get_cell(alias=alias)
-                print('Cell {} already exists'.format(alias))
+                try:
+                    cell, _ = self.spreadsheet.get_cell(alias=alias)
+                    print('Cell {} already exists'.format(alias))
 
-                if cell is not None:
+
                     # Ask for replace
                     replace = input('Do you want to replace it (y/n)? ')
                     if replace == 'y':
                         value = input("Enter a value or expression: ")
 
                         self.spreadsheet.update_cell(alias=alias, value=value)
-                else:
+                        return
+                except Exception as e:
+
                     # Cell don't exist, it can be created
                     value = input("Enter a value or expression: ")
                     try:
