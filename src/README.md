@@ -92,7 +92,19 @@ EXPRESSION: =B2+1
 
 ## Usage
 Execute `python menu.py`
+```
+SpreadSheet Menu:
 
+1. Create new Spreadsheet
+2. Save Spreadsheet
+3. Load Spreadsheet
+4. Set Value
+5. Get Value
+6. Copy cell
+7. Print current Spreadsheet
+8. Quit
+Enter an option: 
+```
 8 options are available: 
 1) Create new Spreadsheet: We will need to select this option if we want to start working with an empty new spreadsheet.
 
