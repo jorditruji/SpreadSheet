@@ -38,8 +38,9 @@ Aliases column and row can be fixed using `$` before column label and/or row num
 the cells involved in a expression when copying a cell to other cell or cells.
 #### Observer:
 
-Every cell have a list of observers. If a cell is involved to an expression, the expression cell will be attached
-as an observer of the involved cell. Every time an involved value is changed, the expression cell value will be changed.
+Every type of cell can be subject including expression cells. Only expression cells are the observers
+Every cell (subject) have a list of observers. If a cell is involved to an expression, the expression cell will be attached
+as an observer of the involved cell. Every time an involved value is changed, the expression cell value will be updated accordingly.
 
 Following this [reference](https://refactoring.guru/design-patterns/observer).
 
@@ -51,6 +52,30 @@ Design use cases are in this [link](../design/use_cases.md)
 Design SSD's are in this [link](../design/ssd.md)
 
 ![Alt text](resources/img/uml.jpg?raw=true "UML Diagram")
+
+### Design choices and other comments
+On the first design cells was stored in a matricial manner, after seeing how the abstract factory pattern worked we thought it would be useful to just create the cells on demand using this factory. However, the container used for storing created cells would be a dictionary having as key alias as keys instead of a plain list if we did the project again.
+
+
+Managing the dependencies between cells in expressions is not a trivial thing. One single update on a numeric cell can trigger multiple chained updates on other cells. The observer pattern make this problem much easier to solve with few lines of code.
+
+One other comment is the code styliling of the classes used to parse and evaluate expressions is clearly different from the rest of the project and should be adaptated to follow both commenting and coding styles.
+
+
+
+
+
+
+## Installation
+
+```
+virtualenv --python=python3.6 python_36
+source python3.6/bin/activate
+git clone https://github.com/jorditruji/SpreadSheet.git
+cd SpreadSheet
+pip3 install -r requirements.txt
+```
+
 
 ## Usage
 Execute `python menu.py`
