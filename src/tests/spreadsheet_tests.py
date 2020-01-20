@@ -10,7 +10,8 @@ from src.utils import utils
 
 class TestSpreadsheet(unittest.TestCase):
 
-    spreadsheet = SpreadSheet()
+    def initialize(self):
+        self.spreadsheet = SpreadSheet()
 
     def set_value(self, alias, value, result):
         logger.info('Test set value...')
@@ -61,9 +62,9 @@ class TestSpreadsheet(unittest.TestCase):
 
     def save_load(self, name):
         logger.info('Test saving spreadsheet...')
-        self.spreadsheet.save(name=name, path_='../resources/')
+        self.spreadsheet.save(name=name, path_='resources/')
         logger.debug('Loading saved spreadsheet')
-        loaded_spreadsheet = self.spreadsheet.load(name=name, path_='../resources/')
+        loaded_spreadsheet = self.spreadsheet.load(name=name, path_='resources/')
 
         self.assertEqual(self.spreadsheet, loaded_spreadsheet, 'Spreadsheets are not equal.')
         logger.success('ok!')
@@ -76,7 +77,10 @@ class TestSpreadsheet(unittest.TestCase):
         self.assertEqual(cell.value, result, 'Failed to update cell value.')
         logger.success('ok!')
 
-    def subscriptions(self):
+    def test_subscriptions(self):
+        # Init spreadsheet
+        self.initialize()
+
         self.set_value(alias='A1', value='10', result=10.0)
         self.set_value(alias='A2', value='=A1+1', result=11.0)   
         self.set_value(alias='A3', value='=A2', result=11.0)
@@ -91,45 +95,40 @@ class TestSpreadsheet(unittest.TestCase):
         self.assertEqual(cell.value, 47.0, 'Failed to update observer cells when subject whas updated')
 
     def test(self):
-        try:
-            # Test set cell of every type
-            self.set_value(alias='A1', value='10', result=10.0)
-            self.set_value(alias='A2', value='=A1+1', result=11.0)
-            self.set_value(alias='D1', value='Hello World!', result='Hello World!')
+        # Init spreadsheet
+        self.initialize()
+
+        # Test set cell of every type
+        self.set_value(alias='A1', value='10', result=10.0)
+        self.set_value(alias='A2', value='=A1+1', result=11.0)
+        self.set_value(alias='D1', value='Hello World!', result='Hello World!')
 
 
-            self.set_value(alias='C3', value='7.5', result=7.5)
-            self.set_value(alias='C1', value='7', result=7.0)
+        self.set_value(alias='C3', value='7.5', result=7.5)
+        self.set_value(alias='C1', value='7', result=7.0)
 
-            # Test copy cells
-            self.copy_cell(alias_origin='A2', alias_dest='C2', result=7.0+1)
+        # Test copy cells
+        self.copy_cell(alias_origin='A2', alias_dest='C2', result=7.0+1)
 
-            self.set_value(alias='B1', value='6', result=6.0)
-            results = [7.0, 8.0, 9.0, 10.0, 11.0]
-            self.copy_cells(alias_origin='A2', alias_dest='B2:B6', results=results)
+        self.set_value(alias='B1', value='6', result=6.0)
+        results = [7.0, 8.0, 9.0, 10.0, 11.0]
+        self.copy_cells(alias_origin='A2', alias_dest='B2:B6', results=results)
 
-            # Test operations and functions
-            self.set_value(alias='A3', value='=A1+A2', result=21.0)
-            self.set_value(alias='A4', value='=A1*A2', result=110.0)
-            self.set_value(alias='A5', value='=A2/A1', result=1.1)
-            self.set_value(alias='A6', value='=mean(A1:A2)', result=10.5)
-            self.set_value(alias='A7', value='=SUM(A1:A2)', result=21.0)
-            self.set_value(alias='A8', value='=sum($A$1:A2, SUM($B$1:$B$2))', result=34.0)
+        # Test operations and functions
+        self.set_value(alias='A3', value='=A1+A2', result=21.0)
+        self.set_value(alias='A4', value='=A1*A2', result=110.0)
+        self.set_value(alias='A5', value='=A2/A1', result=1.1)
+        self.set_value(alias='A6', value='=mean(A1:A2)', result=10.5)
+        self.set_value(alias='A7', value='=SUM(A1:A2)', result=21.0)
+        self.set_value(alias='A8', value='=sum($A$1:A2, SUM($B$1:$B$2))', result=34.0)
 
-            self.copy_cell(alias_origin='A8', alias_dest='B8', result=47.0)
+        self.copy_cell(alias_origin='A8', alias_dest='B8', result=47.0)
 
-            self.copy_cell(alias_origin='D1', alias_dest='D2', result='Hello World!')
+        self.copy_cell(alias_origin='D1', alias_dest='D2', result='Hello World!')
 
-            self.copy_cell(alias_origin='B1', alias_dest='C4', result=6.0)
+        self.copy_cell(alias_origin='B1', alias_dest='C4', result=6.0)
 
-            self.save_load('test')
+        self.save_load('test')
 
-        except Exception as e:
-            logger.error(e.custom_message)
-            raise e
-
-
-if __name__ == '__main__':
-        unittest.main()
 
 
