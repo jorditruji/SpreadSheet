@@ -1,6 +1,6 @@
 import sys
 import os
-sys.path.append(os.getcwd()[:os.getcwd().index('src')])
+#sys.path.append(os.getcwd()[:os.getcwd().index('src')])
 
 from src.spreadsheet import SpreadSheet
 
