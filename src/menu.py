@@ -122,12 +122,11 @@ class Menu:
     def print_spreadsheet(self):
         if self.spreadsheet is not None:
             try:
-                self.spreadsheet.print()
+                self.spreadsheet.printify()
             except Exception as e:
                 print(e.custom_message)
         else:
             print('There is no initialized Spreadsheet Class.\n')
-
 
     def quit(self):
         print("Bye!")

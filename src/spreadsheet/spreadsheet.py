@@ -435,7 +435,7 @@ class SpreadSheet:
 			for alias in alias_list:
 				self.set(alias=alias, value=value)
 
-	def print(self):
+	def printify(self):
 		self.save(name='tmp')
 
 		with open('resources/tmp.txt') as csvfile:
@@ -456,8 +456,8 @@ class SpreadSheet:
 			print("-"*len(to_print))
 			print(to_print)
 
-	def _pad_col(self, col, max_width):
-	    return col.ljust(max_width)
+	def pad_col(self, col, max_width):
+		return col.ljust(max_width)
 
 
 
