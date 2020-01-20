@@ -47,10 +47,6 @@ Following this [reference](https://refactoring.guru/design-patterns/observer).
 ## Design
 #### UML Diagram:
 
-Design use cases are in this [link](../design/use_cases.md)
-
-Design SSD's are in this [link](../design/ssd.md)
-
 ![Alt text](resources/img/uml.jpg?raw=true "UML Diagram")
 
 ### Design choices and other comments
