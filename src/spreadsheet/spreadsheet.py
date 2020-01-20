@@ -456,7 +456,7 @@ class SpreadSheet:
 			print("-"*len(to_print))
 			print(to_print)
 
-	def pad_col(self, col, max_width):
+	def _pad_col(self, col, max_width):
 		return col.ljust(max_width)
 
 
