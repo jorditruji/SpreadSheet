@@ -56,4 +56,4 @@ html_static_path = ['_static']
 
 
 # Add napoleon to the extensions list
-extensions = ['sphinx.ext.napoleon']
+extensions = ['sphinx.ext.napoleon', 'sphinx.ext.githubpages']
