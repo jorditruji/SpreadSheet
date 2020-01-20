@@ -38,8 +38,9 @@ Aliases column and row can be fixed using `$` before column label and/or row num
 the cells involved in a expression when copying a cell to other cell or cells.
 #### Observer:
 
-Every cell have a list of observers. If a cell is involved to an expression, the expression cell will be attached
-as an observer of the involved cell. Every time an involved value is changed, the expression cell value will be changed.
+Every type of cell can be subject including expression cells. Only expression cells are the observers
+Every cell (subject) have a list of observers. If a cell is involved to an expression, the expression cell will be attached
+as an observer of the involved cell. Every time an involved value is changed, the expression cell value will be updated accordingly.
 
 Following this [reference](https://refactoring.guru/design-patterns/observer).
 
