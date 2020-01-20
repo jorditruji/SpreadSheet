@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>src.utils package &#8212; Spreadsheet 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="src.spreadsheet package" href="src.spreadsheet.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="src-utils-package">
+<h1>src.utils package<a class="headerlink" href="#src-utils-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-src.utils.utils">
+<span id="src-utils-utils-module"></span><h2>src.utils.utils module<a class="headerlink" href="#module-src.utils.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="src.utils.utils.Utils">
+<em class="property">class </em><code class="sig-prename descclassname">src.utils.utils.</code><code class="sig-name descname">Utils</code><a class="headerlink" href="#src.utils.utils.Utils" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Provides the needed methods in order to find out which cells are involved in an action and also perform operations
+on them if needed</p>
+<dl class="method">
+<dt id="src.utils.utils.Utils.find_cells">
+<em class="property">classmethod </em><code class="sig-name descname">find_cells</code><span class="sig-paren">(</span><em class="sig-param">expression</em><span class="sig-paren">)</span><a class="headerlink" href="#src.utils.utils.Utils.find_cells" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="src.utils.utils.Utils.find_ranges">
+<em class="property">classmethod </em><code class="sig-name descname">find_ranges</code><span class="sig-paren">(</span><em class="sig-param">expression</em><span class="sig-paren">)</span><a class="headerlink" href="#src.utils.utils.Utils.find_ranges" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="src.utils.utils.Utils.from_range_to_list">
+<em class="property">classmethod </em><code class="sig-name descname">from_range_to_list</code><span class="sig-paren">(</span><em class="sig-param">range_</em>, <em class="sig-param">letter_list</em><span class="sig-paren">)</span><a class="headerlink" href="#src.utils.utils.Utils.from_range_to_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts range (A1:A6) to list of alias
+:param range_: Range of cells
+:type range_: str
+:param letter_list: Liat of possible column alias
+:type letter_list: list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>list of cell alias involved</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.utils.utils.Utils.from_range_to_str">
+<em class="property">classmethod </em><code class="sig-name descname">from_range_to_str</code><span class="sig-paren">(</span><em class="sig-param">range_</em>, <em class="sig-param">letter_list</em><span class="sig-paren">)</span><a class="headerlink" href="#src.utils.utils.Utils.from_range_to_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts range (A1:A6) to string of alias
+:param range_: Range of cells
+:type range_: str
+:param letter_list: Liat of possible column alias
+:type letter_list: list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>list of cell alias involved</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.utils.utils.Utils.infer_cell_type">
+<em class="property">classmethod </em><code class="sig-name descname">infer_cell_type</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#src.utils.utils.Utils.infer_cell_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses input value
+:param value: String or numeric value
+:type value: str</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>type of cell</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.utils.utils.Utils.parse_alias">
+<em class="property">classmethod </em><code class="sig-name descname">parse_alias</code><span class="sig-paren">(</span><em class="sig-param">alias</em><span class="sig-paren">)</span><a class="headerlink" href="#src.utils.utils.Utils.parse_alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses cell alias
+:param alias: Cell alias
+:type alias: str</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>col, row</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="src.utils.utils.utils">
+<code class="sig-prename descclassname">src.utils.utils.</code><code class="sig-name descname">utils</code><a class="headerlink" href="#src.utils.utils.utils" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#src.utils.utils.Utils" title="src.utils.utils.Utils"><code class="xref py py-class docutils literal notranslate"><span class="pre">src.utils.utils.Utils</span></code></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.utils" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Spreadsheet</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="src.html">src package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="src.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="src.cells.html">src.cells package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.exceptions.html">src.exceptions package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.spreadsheet.html">src.spreadsheet package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">src.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-src.utils.utils">src.utils.utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-src.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#src-menu-module">src.menu module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#module-src">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="src.html">src package</a><ul>
+      <li>Previous: <a href="src.spreadsheet.html" title="previous chapter">src.spreadsheet package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Jordi Morera, Janna Escur, Eric Presas.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/src.utils.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

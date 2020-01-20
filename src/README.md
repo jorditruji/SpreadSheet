@@ -43,52 +43,14 @@ as an observer of the involved cell. Every time an involved value is changed, th
 
 Following this [reference](https://refactoring.guru/design-patterns/observer).
 
-### UML Diagram:
+## Design
+#### UML Diagram:
 
-![Alt text](resources/img/uml_diagram.jpg?raw=true "UML Diagram")
+Design use cases are in this [link](../design/use_cases.md)
 
-### Use cases:
+Design SSD's are in this [link](../design/ssd.md)
 
-
-#### 1. Copy cell:
-
-![Alt text](resources/img/copy_cell.jpg?raw=true "Copy cell SSD")
-
-##### Examples:
-```python
-spreadsheet = Spreadsheet()
-
-#Set up
-spreadsheet.set(alias='A1', value='10')
-spreadsheet.set(alias='A2', value='=A1+1')
-spreadsheet.set(alias='B1', value='7')
-
-# Copy cell to a signle cell
-spreadsheet.copy_cell(alias_origin='A2', range='B2')
-cell = spreadsheet.get_cell(alias='B2')
-cell.printify()
-
-```
-```editorconfig
-CELL: B2
-TYPE: EXPRESSION
-VALUE: 8.0
-EXPRESSION: =B1+1
-```
-
-```python
-# Copy cell to a range of cells
-spreadsheet.copy_cell(alias_origin='A2', range='B3:B6')
-cell = spreadsheet.get_cell(alias='B3')
-cell.printify()
-
-```
-```editorconfig
-CELL: B3
-TYPE: EXPRESSION
-VALUE: 9.0
-EXPRESSION: =B2+1
-```
+![Alt text](resources/img/uml.jpg?raw=true "UML Diagram")
 
 ## Usage
 Execute `python menu.py`
