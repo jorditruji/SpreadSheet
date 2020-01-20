@@ -7,4 +7,4 @@ The respository is organised as follows:
   
   - docs: Auto-generated documentation of all the project classes.
   
-  - src: Folder containing the program code to be run. See src/README.md to read about all the information related to the project requirements, the design, the installation and usage.
+  - src: Folder containing the program code to be run. See [src/README.md](https://github.com/jorditruji/SpreadSheet/tree/master/src/README.md) to read about all the information related to the project requirements, the design, the installation and usage.
