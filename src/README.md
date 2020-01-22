@@ -66,7 +66,7 @@ One other comment is the code styliling of the classes used to parse and evaluat
 
 ```
 virtualenv --python=python3.6 python_36
-source python3.6/bin/activate
+source python_36/bin/activate
 git clone https://github.com/jorditruji/SpreadSheet.git
 cd SpreadSheet
 pip3 install -r requirements.txt
